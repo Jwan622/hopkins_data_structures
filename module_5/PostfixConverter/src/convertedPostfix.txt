@@ -1,0 +1,202 @@
+Handling Postfix line: AB+
+LD A
+AD B
+ST TEMP1
+--------------
+Handling Postfix line: AB-
+LD A
+SB B
+ST TEMP1
+--------------
+Handling Postfix line: AB*
+LD A
+ML B
+ST TEMP1
+--------------
+Handling Postfix line: AB/
+LD A
+DV B
+ST TEMP1
+--------------
+Handling Postfix line: ab+
+LD a
+AD b
+ST TEMP1
+--------------
+Handling Postfix line: AB+C-
+LD A
+AD B
+ST TEMP1
+LD TEMP1
+SB C
+ST TEMP2
+--------------
+Handling Postfix line: AB+C*
+LD A
+AD B
+ST TEMP1
+LD TEMP1
+ML C
+ST TEMP2
+--------------
+Handling Postfix line: ABC+-
+LD B
+AD C
+ST TEMP1
+LD A
+SB TEMP1
+ST TEMP2
+--------------
+Handling Postfix line: ABC*+DE-/
+LD B
+ML C
+ST TEMP1
+LD A
+AD TEMP1
+ST TEMP2
+LD D
+SB E
+ST TEMP3
+LD TEMP2
+DV TEMP3
+ST TEMP4
+--------------
+Handling Postfix line: AB-C+DEF-+$
+LD A
+SB B
+ST TEMP1
+LD TEMP1
+AD C
+ST TEMP2
+LD E
+SB F
+ST TEMP3
+LD D
+AD TEMP3
+ST TEMP4
+LD TEMP2
+EXP TEMP4
+ST TEMP5
+--------------
+Handling Postfix line: ABCDE-+$*EF*-
+LD D
+SB E
+ST TEMP1
+LD C
+AD TEMP1
+ST TEMP2
+LD B
+EXP TEMP2
+ST TEMP3
+LD A
+ML TEMP3
+ST TEMP4
+LD E
+ML F
+ST TEMP5
+LD TEMP4
+SB TEMP5
+ST TEMP6
+--------------
+Handling Postfix line: ABC+*CBA-+*
+LD B
+AD C
+ST TEMP1
+LD A
+ML TEMP1
+ST TEMP2
+LD B
+SB A
+ST TEMP3
+LD C
+AD TEMP3
+ST TEMP4
+LD TEMP2
+ML TEMP4
+ST TEMP5
+--------------
+Handling Postfix line: ABC+/CBA*+
+Postfix unbalanced. Too few operators
+--------------
+Handling Postfix line: AB-*CBA+-*
+Stack does not have enough items, cannot execute operation: *
+--------------
+Handling Postfix line: ABC-/BA-+/
+Stack does not have enough items, cannot execute operation: /
+--------------
+Handling Postfix line: ABC+$CBA-+*
+LD B
+AD C
+ST TEMP1
+LD A
+EXP TEMP1
+ST TEMP2
+LD B
+SB A
+ST TEMP3
+LD C
+AD TEMP3
+ST TEMP4
+LD TEMP2
+ML TEMP4
+ST TEMP5
+--------------
+Handling Postfix line: AB0+/CBA+-/
+LD B
+AD 0
+ST TEMP1
+LD A
+DV TEMP1
+ST TEMP2
+LD B
+AD A
+ST TEMP3
+LD C
+SB TEMP3
+ST TEMP4
+LD TEMP2
+DV TEMP4
+ST TEMP5
+--------------
+Handling Postfix line: -AB
+Stack does not have enough items, cannot execute operation: -
+--------------
+Handling Postfix line: +AB
+Stack does not have enough items, cannot execute operation: +
+--------------
+Handling Postfix line: *AB
+Stack does not have enough items, cannot execute operation: *
+--------------
+Handling Postfix line: /AB
+Stack does not have enough items, cannot execute operation: /
+--------------
+Handling Postfix line: C-AB
+Stack does not have enough items, cannot execute operation: -
+--------------
+Handling Postfix line: C+AB
+Stack does not have enough items, cannot execute operation: +
+--------------
+Handling Postfix line: C*AB
+Stack does not have enough items, cannot execute operation: *
+--------------
+Handling Postfix line: C/AB
+Stack does not have enough items, cannot execute operation: /
+--------------
+Handling Postfix line: A
+Postfix unbalanced. Too few operators
+--------------
+Handling Postfix line: 
+Postfix:  , is just an empty string. Doing nothing
+--------------
+Handling Postfix line: AB
+Postfix unbalanced. Too few operators
+--------------
+Handling Postfix line: AB@
+Character is not a valid operand or operator: @
+--------------
+Handling Postfix line: AB#
+Character is not a valid operand or operator: #
+--------------
+Handling Postfix line: !
+Postfix !, is just a single invalid operand. Doing nothing
+--------------
