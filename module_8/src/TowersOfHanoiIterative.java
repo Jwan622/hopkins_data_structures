@@ -25,16 +25,19 @@ public class TowersOfHanoiIterative {
     // A Linked List Stack which is used to represent a Hanoi pole
     public class LinkedListStack {
         private Node head;  // the head node
+        private Node nullNode;
 
         public LinkedListStack() { // constructor that just sets head to null and the name
             // internal data structure to keep track of head
             this.head = null;
+            this.nullNode = new Node();
+            this.nullNode.data = 0;
         }
 
         // Pop node from the beginning of the stack
         public Node pop() throws LinkedListEmptyException {
             if (head == null) {
-                throw new LinkedListEmptyException();
+                return nullNode;
             }
             Node node = head; // we need to do this because pop returns data
             head = head.next; // set head node to head.next
@@ -93,16 +96,16 @@ public class TowersOfHanoiIterative {
      */
     public void makeLegalMoveBtwTwoPoles(LinkedListStack source, LinkedListStack destination, char sourceName, char destinationName)
     {
-        int pole1NextDisk = source.size();
-        int pole2NextDisk = destination.size();
+        int pole1NextDisk = source.pop().data;
+        int pole2NextDisk = destination.pop().data;
 
-        if (source.empty()) { // When source is empty, the legal move is from destination to source
+        if (pole1NextDisk == 0) { // When source is empty, the legal move is from destination to source
             source.push(pole2NextDisk);
             logMovement(destinationName, sourceName, pole2NextDisk);
-        } else if (destination.empty()) { // When destination is empty, legal move is from source to destination
+        } else if (pole2NextDisk == 0) { // When destination is empty, legal move is from source to destination
             destination.push(pole1NextDisk);
             logMovement(sourceName, destinationName, pole1NextDisk);
-        } else if (source.size() > destination.size()) { // When top disk of pole1 > top disk of pole2
+        } else if (pole1NextDisk > pole2NextDisk) { // When top disk of pole1 > top disk of pole2
             source.push(pole1NextDisk);
             source.push(pole2NextDisk);
             logMovement(destinationName, sourceName, pole2NextDisk);
@@ -120,12 +123,10 @@ public class TowersOfHanoiIterative {
 
     // Function to run iterative algo to solve TowersOfHanoi game
     public void run(int num_of_disks, char sourceName, char destinationName, char spareName) {
-        int diskNumber;
         int total_num_of_moves = (int) (Math.pow(2, num_of_disks) - 1); // Math.pow returns a double but we need an integer so use a cast.
         LinkedListStack source = new LinkedListStack();
         LinkedListStack destination = new LinkedListStack();
         LinkedListStack spare = new LinkedListStack();
-
 
         // If number of disks is even, then interchange destination pole and auxiliary pole
         if (num_of_disks % 2 == 0) {
@@ -135,17 +136,16 @@ public class TowersOfHanoiIterative {
         }
 
         // Larger disks will be pushed first
-        for (diskNumber = num_of_disks; diskNumber >= 1; diskNumber--)
+        for (int diskNumber = num_of_disks; diskNumber >= 1; diskNumber--)
             source.push(diskNumber);
 
-        for (diskNumber = 1; diskNumber <= total_num_of_moves; diskNumber++) {
-            if (diskNumber % 3 == 1)
+        for (int move = 1; move <= total_num_of_moves; move++) {
+            if (move % 3 == 1)
                 makeLegalMoveBtwTwoPoles(source, destination, sourceName, destinationName);
 
-            else if (diskNumber % 3 == 2)
+            else if (move % 3 == 2) {
                 makeLegalMoveBtwTwoPoles(source, spare, sourceName, spareName);
-
-            else if (diskNumber % 3 == 0)
+            } else if (move % 3 == 0)
                 makeLegalMoveBtwTwoPoles(spare, destination, spareName, destinationName);
         }
     }
