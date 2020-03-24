@@ -4,8 +4,6 @@ Class EN.605.202.81.SP20 Data Structures
 Lab 2
 */
 
-import java.time.Instant;
-import java.time.Duration;
 import java.io.*;
 
 /**
@@ -22,6 +20,7 @@ import java.io.*;
 
 public class TowersOfHanoiRunner {
     private static PrintWriter outputWriter;
+    private static FileWriter timeWriter;
     private static String DELIMITER = "-----------------------------------";
 
     public static void main(String args[]) throws IOException {
@@ -31,32 +30,42 @@ public class TowersOfHanoiRunner {
         String outputFile = args[1];
         File outputf = new File(outputFile);
 
+        String timeFile = args[2];
+        File timeFilef = new File(timeFile);
+
         //writer to the output file. Using a PrintWriter to take advantage of printf
         outputWriter = new PrintWriter(new FileWriter(outputf));
+        timeWriter = new FileWriter(timeFilef);
 
+        timeWriter.write(String.format("%20s %20s %20s \r\n", "NumberOfDisks", "Recursive", "Iterative"));
         // storage for the algorithm steps
         StringBuilder recursiveSteps;
         StringBuilder iterativeSteps;
 
-        output("Number of Disks: " + String.valueOf(numberOfDisks));
+        for (int i = 1; i <= numberOfDisks; i++) {
+            output("Number of Disks: " + String.valueOf(i));
+            long start = System.nanoTime();
+            recursiveSteps = new TowersOfHanoiRecursive().run(i, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
+            long finish = System.nanoTime();
+            long timeElapsedRecursive = finish - start;
+            output(recursiveSteps);
+            output("Recursive time elapsed: " + timeElapsedRecursive);
 
-        long start = Instant.now().toEpochMilli();
-        recursiveSteps = TowersOfHanoiRecursive.run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
-        long finish = Instant.now().toEpochMilli();
-        long timeElapsed = finish - start;
-        output(recursiveSteps);
-        output("Recursive time elapsed: " + timeElapsed);
+            output(DELIMITER);
 
-        output(DELIMITER);
+            output("Number of Disks: " + String.valueOf(i));
+            start = System.nanoTime();
+            iterativeSteps = new TowersOfHanoiIterative().run(i, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
+            finish = System.nanoTime();
+            long timeElapsedIterative = finish - start;
+            output(iterativeSteps);
+            output("Iterative time elapsed: " + timeElapsedIterative);
 
-        output("Number of Disks: " + String.valueOf(numberOfDisks));
-        start = Instant.now().toEpochMilli();
-        iterativeSteps = new TowersOfHanoiIterative().run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
-        finish = Instant.now().toEpochMilli();
-        timeElapsed = finish - start;
-        output(iterativeSteps);
-        output("Iterative time elapsed: " + timeElapsed);
+            timeWriter.write(String.format("%20s %20s %20s", i, timeElapsedRecursive, timeElapsedIterative));
+            timeWriter.write("\n");
+        }
         outputWriter.close();
+        timeWriter.close();
     }
 
     private static void output(String message) {

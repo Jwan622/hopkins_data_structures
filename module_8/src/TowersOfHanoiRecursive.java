@@ -1,14 +1,18 @@
 public class TowersOfHanoiRecursive {
-    private static StringBuilder steps = new StringBuilder().append("");
+    private StringBuilder steps;
 
-    public static StringBuilder run(int numberOfDisks, char sourceName, char destName, char spareName) {
+    TowersOfHanoiRecursive() {
+        this.steps = new StringBuilder().append("");
+    }
+
+    public StringBuilder run(int numberOfDisks, char sourceName, char destName, char spareName) {
         StringBuilder recursiveSteps = build(numberOfDisks, sourceName, destName, spareName);
         // removes the last newline of the StringBuilder
         recursiveSteps.setLength(recursiveSteps.length() - 1);
         return recursiveSteps;
     }
 
-    private static StringBuilder build(int numberOfDisks, char sourceName, char destName, char spareName) {
+    private StringBuilder build(int numberOfDisks, char sourceName, char destName, char spareName) {
         if (numberOfDisks == 1) {
             log(numberOfDisks, sourceName, destName);
             return steps;
@@ -34,7 +38,7 @@ public class TowersOfHanoiRecursive {
 
 
 
-    private static void log(int numberOfDisks, char source_rod, char dest_rod) {
+    private void log(int numberOfDisks, char source_rod, char dest_rod) {
         String separator = "\n";
         steps.append("Move disk " + numberOfDisks + " from tower " +  source_rod + " to tower " + dest_rod).append(separator);
     }
