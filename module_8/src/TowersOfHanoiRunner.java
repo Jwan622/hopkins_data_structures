@@ -38,28 +38,34 @@ public class TowersOfHanoiRunner {
         StringBuilder recursiveSteps;
         StringBuilder iterativeSteps;
 
+        output("Number of Disks: " + String.valueOf(numberOfDisks));
+
         long start = Instant.now().toEpochMilli();
         recursiveSteps = TowersOfHanoiRecursive.run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
         long finish = Instant.now().toEpochMilli();
         long timeElapsed = finish - start;
-        System.out.println(recursiveSteps);
-        outputWriter.println(recursiveSteps);
-        System.out.println("Recursive time elapsed: " + timeElapsed);
-        outputWriter.println("Recursive time elapsed: " + timeElapsed);
+        output(recursiveSteps);
+        output("Recursive time elapsed: " + timeElapsed);
 
-        System.out.println(DELIMITER);
-        outputWriter.println(DELIMITER);
+        output(DELIMITER);
 
+        output("Number of Disks: " + String.valueOf(numberOfDisks));
         start = Instant.now().toEpochMilli();
         iterativeSteps = new TowersOfHanoiIterative().run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
         finish = Instant.now().toEpochMilli();
         timeElapsed = finish - start;
-        System.out.println(iterativeSteps);
-        outputWriter.println(iterativeSteps);
-        System.out.println("Iterative time elapsed: " + timeElapsed);
-        outputWriter.println("Iterative time elapsed: " + timeElapsed);
-
-
+        output(iterativeSteps);
+        output("Iterative time elapsed: " + timeElapsed);
         outputWriter.close();
+    }
+
+    private static void output(String message) {
+        System.out.println(message);
+        outputWriter.println(message);
+    }
+
+    private static void output(StringBuilder message) {
+        System.out.println(message);
+        outputWriter.println(message);
     }
 }
