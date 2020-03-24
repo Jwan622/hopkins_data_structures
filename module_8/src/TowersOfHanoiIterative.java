@@ -3,20 +3,20 @@ import java.util.LinkedList;
 /**
  * Algo for iterative solution for Towers of Hanoi
  * 
- * 1. Calculate the total number of moves required i.e. "pow(2, n) - 1" where n is number of disks.
- * 2. If number of disks (i.e. n) is even then interchange destination  pole and auxiliary pole.
- * 3. for i = 1 to total number of moves:
- *      if i%3 == 1:
- *          legal movement of top disk between source pole and destination pole
- *      if i%3 == 2:
- *          legal movement top disk between source pole and auxiliary pole
- *      if i%3 == 0:
- *         legal movement top disk between auxiliary pole and destination pole
+ * 1. Calculate the total number of moves required which is 2^n - 1" where n is number of disks.
+ * 2. If the number of disks (again, it is n) is even, then interchange the destination pole and the spare pole.
+ * 3. For i = 1 to the total number of moves:
+ *      if i % 3 == 1:
+ *          make the legal move of the top disk between source pole and destination pole
+ *      if i % 3 == 2:
+ *          make the legal move of the top disk between source pole and spare pole
+ *      if i % 3 == 0:
+ *         make the legal move of the top disk between spare pole and destination pole
  *
  * @author Jeffrey Wan
  */
 public class TowersOfHanoiIterative {
-    // global steps variable to return the algo steps in
+    // global steps variable to store the algo steps
     public StringBuilder steps = new StringBuilder().append("");
 
     // public class for Node. The stored data is the disk number
@@ -25,7 +25,7 @@ public class TowersOfHanoiIterative {
         Node next;
     }
 
-    // A Linked List Stack which is used to represent a Hanoi pole
+    // A Linked List Stack which is used to represent a Hanoi pole. This is mostly taken from lab 1
     public class LinkedListStack {
         private Node head;  // the head node
         private Node nullNode;
@@ -37,8 +37,11 @@ public class TowersOfHanoiIterative {
             this.nullNode.data = 0;
         }
 
-        // Pop node from the beginning of the stack
-        public Node pop() throws LinkedListEmptyException {
+        /**
+         * Pop node from the beginning of the stack. We need the null node because we need a place holder node that says the stack is empty
+         * @return a node that represents a disk on the tower
+         */
+        public Node pop() {
             if (head == null) {
                 return nullNode;
             }
@@ -48,27 +51,9 @@ public class TowersOfHanoiIterative {
             return node;
         }
 
-        public int size() {
-            Node temp = head;
-            int count = 0;
-            while (temp != null) {
-                count++;
-                temp = temp.next;
-            }
-
-            return count;
-        }
-
-        public boolean empty() {
-            return size() == 0;
-        }
-
         /**
-         * This method is used to write to output and the file. It is an overloaded method that takes 2 arguments and writes
-         * each one to the file and stdout. Remember that the first item popped is A and is passed to the operation instruction
-         * remember that the second item popped is B and passed to the load instruction. We lastly increment the
-         * tempVarCounter every time we set a variable so that new temp variables are used when creating the machine instruction.
-         * @param data This is the first item popped off the stack
+         * This method is used when pushing a disk onto a poll.
+         * @param data This data is the disk number
          */
         public void push(int data) {
             Node OGHead = head; // we need this because new pushed node needs to point to the OGHead (original gangsta head)
@@ -79,19 +64,11 @@ public class TowersOfHanoiIterative {
     }
 
     /**
-     *
-     * Exception to indicate that LinkedList is empty. Occurs when popping from an empty list.
-     */
-    class LinkedListEmptyException extends RuntimeException {
-        public LinkedListEmptyException() {
-            // used in this class when popping a stack with no items.
-            super();
-        }
-    }
-
-
-    /**
      * This function makes the legal movement between two poles. Could be either direction depending on what the legal movement is.
+     * If the source is empty, the legal move is to the source
+     * If the destination is empty, the legal move is to the destination
+     * If the source is greater than the destination, the legal move is to the destination
+     * If the source is equal to or less than the destination, the legal move is to the source.
      * @param source the source pole
      * @param destination the destination pole
      * @param sourceName source name used for logging
@@ -119,10 +96,15 @@ public class TowersOfHanoiIterative {
         }
     }
 
-    // Function to show the movement of disks
-    private void logMovement(char source, char destination, int disk) {
+    /**
+     * Function to show the movement of disks
+     * @param sourceName the name of the source
+     * @param destinationName the name of the destination
+     * @param disk the disk number
+     */
+    private void logMovement(char sourceName, char destinationName, int disk) {
         String separator = "\n";
-        steps.append("Move disk " + disk + " from tower " + source + " to tower " + destination).append(separator);
+        steps.append("Move disk " + disk + " from tower " + sourceName + " to tower " + destinationName).append(separator);
     }
 
     // Function to run iterative algo to solve TowersOfHanoi game

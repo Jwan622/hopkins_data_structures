@@ -1,3 +1,18 @@
+/**
+ * Algo for recursive solution for Towers of Hanoi
+ *
+ * 1. Base case: if numberOfDisks == 1, move disk from source to destination
+ * 2. To solve the problem for n, recursively solve the problem of moving disk n-1 disks from source to spare
+ * 3. Then, Move disk n from source to destination
+ * 4. Recursively solve the problem of moving disks from spare to destination
+ *
+ * Generally, it makes sense that we need to move n − 1 discs onto the spare peg, using the destination peg as the spare poll
+ * (we do this by switching the pole arguments in the recursive call). After that, the remaining nth disc will be moved
+ * to the destination peg and afterwards the second recursion call completes the moving of the rest of the disks, by moving
+ * the disks on the spare tower fto the destination peg, above the nth disk.
+ * @author Jeffrey Wan
+ */
+
 public class TowersOfHanoiRecursive {
     private StringBuilder steps;
 

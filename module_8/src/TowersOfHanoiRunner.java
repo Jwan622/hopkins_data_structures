@@ -12,17 +12,24 @@ import java.io.*;
  *  * 2) Each move consists of taking the upper disk from one of the stacks and placing it on top of another stack i.e. a disk can only be moved if it is the uppermost disk on a stack.
  *  * 3) No disk may be placed on top of a smaller disk.
  *
- *  This class class both the recursive and iterative solutions to this game and times the algorithm
+ *  This class is the main entry point for this Towers of Hanoi application
  * @author Jeffrey Wan
  * @version 1.0
  * @since 2020-03-23
  */
-
 public class TowersOfHanoiRunner {
     private static PrintWriter outputWriter;
     private static FileWriter timeWriter;
     private static String DELIMITER = "-----------------------------------";
 
+    /**
+     * This method reads in the args. If you run `java TowersOfHanoiRunner 4 towers_of_hanoi_output.txt timetable.txt`,
+     * The 4 is the numberOfDisks and is args[0]
+     * towers_of_hanoi_output.txt is the output file name and is args[1]
+     * timetable.txt is where the times for the recursive and iterative solutions will be recorded and the name is provided by args[2]
+     * @param args arguments passed in from the command line.
+     * @throws IOException In the event of a file error
+     */
     public static void main(String args[]) throws IOException {
         int numberOfDisks = Integer.parseInt(args[0]);
 
@@ -68,11 +75,19 @@ public class TowersOfHanoiRunner {
         timeWriter.close();
     }
 
+    /**
+     * this is going to write the message to standard out and the output file
+     * @param message A message to output to standard out and the file
+     */
     private static void output(String message) {
         System.out.println(message);
         outputWriter.println(message);
     }
 
+    /**
+     * This is an overloaded method and is going to write the algorithm steps to standard out and the output file.
+     * @param message a StringBuilder string to output to standard out and the file
+     */
     private static void output(StringBuilder message) {
         System.out.println(message);
         outputWriter.println(message);
