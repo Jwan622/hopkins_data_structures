@@ -4,6 +4,8 @@ Class EN.605.202.81.SP20 Data Structures
 Lab 2
 */
 
+import java.time.Instant;
+import java.time.Duration;
 import java.io.*;
 
 /**
@@ -20,7 +22,7 @@ import java.io.*;
 
 public class TowersOfHanoiRunner {
     private static PrintWriter outputWriter;
-    private static String DELIMITER = "-------------------";
+    private static String DELIMITER = "-----------------------------------";
 
     public static void main(String args[]) throws IOException {
         int numberOfDisks = Integer.parseInt(args[0]);
@@ -32,8 +34,32 @@ public class TowersOfHanoiRunner {
         //writer to the output file. Using a PrintWriter to take advantage of printf
         outputWriter = new PrintWriter(new FileWriter(outputf));
 
-        TowersOfHanoiRecursive.run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
+        // storage for the algorithm steps
+        StringBuilder recursiveSteps;
+        StringBuilder iterativeSteps;
+
+        long start = Instant.now().toEpochMilli();
+        recursiveSteps = TowersOfHanoiRecursive.run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
+        long finish = Instant.now().toEpochMilli();
+        long timeElapsed = finish - start;
+        System.out.println(recursiveSteps);
+        outputWriter.println(recursiveSteps);
+        System.out.println("Recursive time elapsed: " + timeElapsed);
+        outputWriter.println("Recursive time elapsed: " + timeElapsed);
+
         System.out.println(DELIMITER);
-        new TowersOfHanoiIterative().run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
+        outputWriter.println(DELIMITER);
+
+        start = Instant.now().toEpochMilli();
+        iterativeSteps = new TowersOfHanoiIterative().run(numberOfDisks, 'A', 'B', 'C');  // the last 3 args are the names of the rods used in the game
+        finish = Instant.now().toEpochMilli();
+        timeElapsed = finish - start;
+        System.out.println(iterativeSteps);
+        outputWriter.println(iterativeSteps);
+        System.out.println("Iterative time elapsed: " + timeElapsed);
+        outputWriter.println("Iterative time elapsed: " + timeElapsed);
+
+
+        outputWriter.close();
     }
 }

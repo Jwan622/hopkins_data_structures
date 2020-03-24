@@ -16,7 +16,10 @@ import java.util.LinkedList;
  * @author Jeffrey Wan
  */
 public class TowersOfHanoiIterative {
-    // public class for Node. The stored data is the disk numnber
+    // global steps variable to return the algo steps in
+    public StringBuilder steps = new StringBuilder().append("");
+
+    // public class for Node. The stored data is the disk number
     public class Node {
         int data;
         Node next;
@@ -118,11 +121,12 @@ public class TowersOfHanoiIterative {
 
     // Function to show the movement of disks
     private void logMovement(char source, char destination, int disk) {
-        System.out.println("Move disk " + disk + " from tower " + source + " to tower " + destination);
+        String separator = "\n";
+        steps.append("Move disk " + disk + " from tower " + source + " to tower " + destination).append(separator);
     }
 
     // Function to run iterative algo to solve TowersOfHanoi game
-    public void run(int num_of_disks, char sourceName, char destinationName, char spareName) {
+    public StringBuilder run(int num_of_disks, char sourceName, char destinationName, char spareName) {
         int total_num_of_moves = (int) (Math.pow(2, num_of_disks) - 1); // Math.pow returns a double but we need an integer so use a cast.
         LinkedListStack source = new LinkedListStack();
         LinkedListStack destination = new LinkedListStack();
@@ -148,5 +152,9 @@ public class TowersOfHanoiIterative {
             } else if (move % 3 == 0)
                 makeLegalMoveBtwTwoPoles(spare, destination, spareName, destinationName);
         }
+
+        // removes the last newline of the StringBuilder
+        steps.setLength(steps.length() - 1);
+        return steps;
     }
 }
