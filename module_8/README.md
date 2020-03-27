@@ -14,9 +14,9 @@ javac javac TowersOfHanoiRunner.java
 ```
 
 and then
-`java TowersOfHanoiRunner 4 towers_of_hanoi_output.txt timetable.txt`
+`java TowersOfHanoiRunner 17 towers_of_hanoi_output.txt timetable.txt`
 
-where 4 is the numberOfDisks. This will output the Hanoi steps starting from 1 disk up to 4 disks to the
+where n = 17 and is the numberOfDisks. This will output the Hanoi steps starting from 1 disk up to n disks to the
  `towers_of_hanoi_output.txt` file and the `timetable.txt`  will store the runtimes of each algo in nanoseconds (1
   nanosecond - 1 billionth of a second) 
 

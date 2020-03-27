@@ -33,9 +33,8 @@ public class TowersOfHanoiRecursive {
             return steps;
         }
 
-        // This line makes sense since we now have to move the disks from the source to the spare while using the destination rod as the spare.
-        // The spare becomes the dest_rod.
-        // The dest_rod becomes the spare_rod.
+        // This line makes sense since we now have to move the disks from the source to the spare while using the
+        // destination rod as the spare. The spare becomes the dest_rod. The dest_rod becomes the spare_rod.
         // The source_rod is the same.
         build(numberOfDisks-1, sourceName, spareName, destName);
 

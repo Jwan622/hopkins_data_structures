@@ -30,8 +30,11 @@ public class TowersOfHanoiRunner {
      * @param args arguments passed in from the command line.
      * @throws IOException In the event of a file error
      */
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, NumberOfDisksException {
         int numberOfDisks = Integer.parseInt(args[0]);
+        if (numberOfDisks < 1) {
+            throw new NumberOfDisksException("Number of Disks cannot be less than 1. Enter a number greater than 0.");
+        }
 
         // this creates an output file which will be properly formatted
         String outputFile = args[1];
@@ -44,6 +47,7 @@ public class TowersOfHanoiRunner {
         outputWriter = new PrintWriter(new FileWriter(outputf));
         timeWriter = new FileWriter(timeFilef);
 
+        // these are the column headers for the output file
         timeWriter.write(String.format("%20s %20s %20s \r\n", "NumberOfDisks", "Recursive", "Iterative"));
         // storage for the algorithm steps
         StringBuilder recursiveSteps;
@@ -91,5 +95,16 @@ public class TowersOfHanoiRunner {
     private static void output(StringBuilder message) {
         System.out.println(message);
         outputWriter.println(message);
+    }
+}
+
+/**
+ *
+ * Exception to indicate that LinkedList is empty. Occurs when popping from an empty list.
+ */
+class NumberOfDisksException extends RuntimeException {
+    public NumberOfDisksException(String msg) {
+        // used in the parent class when popping a stack with no items to add a custom message.
+        super(msg);
     }
 }
