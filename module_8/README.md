@@ -10,7 +10,7 @@ Runs on:
 - to run the application, run these commands inside the `src` folder:
 
 ```
-javac javac TowersOfHanoiRunner.java
+javac TowersOfHanoiRunner.java
 ```
 
 and then
