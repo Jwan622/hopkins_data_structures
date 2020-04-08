@@ -31,37 +31,70 @@ public class Tree {
             String newData;
             PriorityQueue.PQueueNode left;
             PriorityQueue.PQueueNode right;
-            if (firstMin.data.length() == 1 && secondMin.data.length() == 1) {
-                if (firstMin.data.compareTo(secondMin.data) < 0) {
-                    left = firstMin;
-                    right = secondMin;
-                    newData = this.createNewData(firstMin.data, secondMin.data);
-                } else {
-                    right = firstMin;
-                    left = secondMin;
-                    newData = this.createNewData(secondMin.data, firstMin.data);
-                }
-            } else if (firstMin.data.length() == 1 && secondMin.data.length() > 1) {
+
+            if (firstMin.integerData < secondMin.integerData) {
                 left = firstMin;
                 right = secondMin;
                 newData = sort(this.createNewData(firstMin.data, secondMin.data));
-            } else if (firstMin.data.length() > 1 && secondMin.data.length() == 1) {
-                right = firstMin;
+            } else if (firstMin.integerData > secondMin.integerData) {
                 left = secondMin;
+                right = firstMin;
                 newData = sort(this.createNewData(secondMin.data, firstMin.data));
             } else {
-                if (firstMin.data.compareTo(secondMin.data) < 0) {
-                    left = firstMin;
-                    right = secondMin;
-                    newData = sort(this.createNewData(firstMin.data, secondMin.data));
-                } else if (firstMin.data.compareTo(secondMin.data) > 0) {
-                    right = firstMin;
-                    left = secondMin;
-                    newData = sort(this.createNewData(secondMin.data, firstMin.data));
+                if ((firstMin.data.length() == 1 && secondMin.data.length() == 1) ||
+                        (firstMin.data.length() > 1 && secondMin.data.length() > 1)) {
+                    if (firstMin.data.compareTo(secondMin.data) < 0) {
+                        left = firstMin;
+                        right = secondMin;
+                        newData = sort(this.createNewData(firstMin.data, secondMin.data));
+                    } else {
+                        right = firstMin;
+                        left = secondMin;
+                        newData = sort(this.createNewData(secondMin.data, firstMin.data));
+                    }
                 } else {
-                    throw new RuntimeException("Two elements in priority queue cannot have same string data");
+                    if (firstMin.data.length() == 1 && secondMin.data.length() > 1) {
+                        left = firstMin;
+                        right = secondMin;
+                        newData = sort(this.createNewData(firstMin.data, secondMin.data));
+                    } else {
+                        right = firstMin;
+                        left = secondMin;
+                        newData = sort(this.createNewData(secondMin.data, firstMin.data));
+                    }
                 }
             }
+//            if (firstMin.data.length() == 1 && secondMin.data.length() == 1) {
+//                if (firstMin.data.compareTo(secondMin.data) < 0) {
+//                    left = firstMin;
+//                    right = secondMin;
+//                    newData = this.createNewData(firstMin.data, secondMin.data);
+//                } else {
+//                    right = firstMin;
+//                    left = secondMin;
+//                    newData = this.createNewData(secondMin.data, firstMin.data);
+//                }
+//            } else if (firstMin.data.length() == 1 && secondMin.data.length() > 1) {
+//                left = firstMin;
+//                right = secondMin;
+//                newData = sort(this.createNewData(firstMin.data, secondMin.data));
+//            } else if (firstMin.data.length() > 1 && secondMin.data.length() == 1) {
+//                right = firstMin;
+//                left = secondMin;
+//                newData = sort(this.createNewData(secondMin.data, firstMin.data));
+//            } else {
+//                if (firstMin.data.compareTo(secondMin.data) < 0) {
+//                    left = firstMin;
+//                    right = secondMin;
+//                    newData = sort(this.createNewData(firstMin.data, secondMin.data));
+//                } else if (firstMin.data.compareTo(secondMin.data) > 0) {
+//                    right = firstMin;
+//                    left = secondMin;
+//                    newData = sort(this.createNewData(secondMin.data, firstMin.data));
+//                } else {
+//                    throw new RuntimeException("Two elements in priority queue cannot have same string data");
+//                }
+//            }
             PriorityQueue.PQueueNode newCombinedHuffmanNode = pqueue.new PQueueNode(newIntegerData, newData);
             // Assign to the combinedNode left and right children
             newCombinedHuffmanNode.leftChild = left;

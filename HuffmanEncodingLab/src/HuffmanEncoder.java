@@ -44,6 +44,13 @@ import java.io.*;
  * Algo for printing codes from tree:
  * - Steps to print codes from Huffman Tree:
 Traverse the tree formed starting from the root. Maintain an auxiliary array. While moving to the left child, write 0 to the array. While moving to the right child, write 1 to the array. Print the array when a leaf node is encountered.
+
+
+ Protocol for left and right:
+ - smaller values to the left first
+ - if tie, tiebreakers:
+    - simpler to the left. C and BD, C to the left.
+    - if both simple or both complex, then alphabetic ordering to resolve tie.
  * @author Jeffrey Wan
  */
 public class HuffmanEncoder {
