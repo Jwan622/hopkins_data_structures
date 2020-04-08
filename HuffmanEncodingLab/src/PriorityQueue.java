@@ -82,12 +82,37 @@ public class PriorityQueue {
                 this.head = node;
                 this.head.next = null;
             } else {
-                if (newHead) {
+                if (newHead && node.integerData < current.integerData) {
                     this.head = node;
                 } else {
-                    previous.next = node;
+                    if (previous != null) {
+                        previous.next = node;
+                    }
                 }
                 node.next = current;
+
+                if (previous != null && current != null && node.integerData == current.integerData && node.data.compareTo(current.data) > 0) {
+                    System.out.println("adding item: " + node.data);
+                    node.next = current.next;
+                    current.next = node;
+                    previous.next = current;
+
+                    PQueueNode temp = current;
+                    current = node;
+                    node = temp;
+                }
+
+                if (newHead && node.integerData == current.integerData && node.data.compareTo(current.data) > 0) {
+                    System.out.println("inside newhead line");
+                    node.next = null;
+                    node.next = current.next;
+                    current.next = node;
+                }
+
+                if (newHead && node.integerData == current.integerData && node.data.compareTo(current.data) < 0) {
+                    node.next = current;
+                    this.head = node;
+                }
             }
             this.size++;
         }

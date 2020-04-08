@@ -107,6 +107,7 @@ public class HuffmanEncoder {
         // from the heap each time until
         // its size reduces to 1, extract until
         // all the nodes are extracted.
+        System.out.println("building tree...");
         huffmanTree.build(pqueue);
         pqueue.displayPreorder(huffmanTree.root);
         // print the codes by traversing the tree
