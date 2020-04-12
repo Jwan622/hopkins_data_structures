@@ -102,16 +102,18 @@ public class PriorityQueue {
                     node = temp;
                 }
 
-                if (newHead && node.integerData == current.integerData && node.data.compareTo(current.data) > 0) {
-                    System.out.println("inside newhead line");
+//                if (newHead && node.integerData == current.integerData && node.data.compareTo(current.data) > 0) {
+//                    System.out.println("inside newhead line");
+//                    node.next = null;
+//                    node.next = current.next;
+//                    current.next = node;
+//                }
+
+                if (node.integerData == current.integerData) {
+                    System.out.println("pushing equivalent node");
                     node.next = null;
                     node.next = current.next;
                     current.next = node;
-                }
-
-                if (newHead && node.integerData == current.integerData && node.data.compareTo(current.data) < 0) {
-                    node.next = current;
-                    this.head = node;
                 }
             }
             this.size++;

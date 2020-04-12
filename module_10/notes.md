@@ -2,12 +2,11 @@
 
 - unlike bubble, does not respond to order in the data
 - just take an item, and move it to the back.
-- pattenr of comparisons similar to bubble sort. we exchnage except when item is in the right place.
+- pattern of comparisons similar to bubble sort. we exchnage except when item is in the right place.
 
 ![selection](selection_sort.png)
 
-cost is pretty much the smae as bubble, quadratic n^2. doesn't have early out of bubble sort and it doesn't respond to
- order. same amout nof work regardless of order of data. 
+cost is pretty much the smae as bubble, quadratic n^2. doesn't have early out of bubble sort and it doesn't respond to order. same amout nof work regardless of order of data. 
  
  
 #### binary tree sort (selection sort)
