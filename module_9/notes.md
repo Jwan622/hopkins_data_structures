@@ -25,13 +25,12 @@ BubbleSort(numbers, numbersSize) {
 ```
 ## Quick sort
 
-Quicksort
 Quicksort is a sorting algorithm that repeatedly partitions the input into low and high parts (each part unsorted), and then recursively sorts each of those parts. To partition the input, quicksort chooses a pivot to divide the data into low and high parts. The pivot can be any value within the array being sorted, commonly the value of the middle array element. Ex: For the list (4, 34, 10, 25, 1), the middle element is located at index 2 (the middle of indices 0..4) and has a value of 10.
 
 To partition the input, the quicksort algorithm divides the array into two parts, referred to as the low partition
  and the high partition. All values in the low partition are less than or equal to the pivot value. All values in the high partition are greater than or equal to the pivot value. The values in each partition are not necessarily sorted. Ex: Partitioning (4, 34, 10, 25, 1) with a pivot value of 10 results in a low partition of (4, 10, 1) and a high partition of (34, 25). Values equal to the pivot may appear in either or both of the partitions.
 
-The partitioning part:
+**The partitioning part**:
 Partitioning algorithm
 The partitioning algorithm uses two index variables l and h (low and high), initialized to the left and right sides
  of the current elements being sorted. As long as the value at index l is less than the pivot value, the algorithm
@@ -88,22 +87,17 @@ The quicksort algorithm's runtime is typically O(N * log N). Quicksort has sever
   algorithm does at most N comparisons moving the l and h indices. If the pivot yields two equal-sized parts, then there will be log N levels, requiring the N * log N comparisons.
 
 ## Worst case runtime for quicksort
-For typical unsorted data, such equal partitioning occurs. However, partitioning may yield unequal sized part in some
- cases. If the pivot selected for partitioning is the smallest or largest element, one partition will have just 1
-  element, and the other partition will have all other elements. If this unequal partitioning happens at every level
-  , there will be N - 1 levels, yielding (N-1)*N, which is O(N^2). So the worst case runtime for the quicksort
-   algorithm is O(N^2). Fortunately, this worst case runtime rarely occurs.
+For typical unsorted data, such equal partitioning occurs. However, partitioning may yield unequal sized part in some cases. If the pivot selected for partitioning is the smallest or largest element, one partition will have just 1 element, and the other partition will have all other elements. If this unequal partitioning happens at every level, there will be N - 1 levels, yielding (N-1)*N, which is O(N^2). So the worst case runtime for the quicksort algorithm is O(N^2). Fortunately, this worst case runtime rarely occurs.
  
  
-How many total comparisons are required to sort a list of 1024 elements?
+In the worst case scenario, how many total comparisons are required to sort a list of 1024 elements?
 
-1047552
+Answer: 1047552
 (1024 - 1) * 1024 = 1023 * 1024 = 1047552 comparisons.
-why?
-At each level, the algorithm does at most N comparisons moving the l and h indices. Also, if the pivot selected for
- partitioning is the smallest or largest element, one partition will have just 1 element, and the other partition will have all other elements. If this unequal partitioning happens at every level, there will be N - 1 levels,
+why is this?
+At each level, the algorithm does at most N comparisons moving the l and h indices. Also, if the pivot selected for partitioning is the smallest or largest element, one partition will have just 1 element, and the other partition will have all other elements. If this unequal partitioning happens at every level, there will be N - 1 levels,
  
- so n*n-1 = 1024*1023 = 1047552 comparions for a time complexity worse case of quicksort.
+so n*n-1 = 1024*1023 = 1047552 comparions for a time complexity worse case of quicksort.
  
  
  
@@ -172,7 +166,7 @@ the first 0 goes to a
 - if the file was reversed order: 5,4,3,2,1. Does every comparions and every exchange, that's the n^2 + n worst case
  scenario
 - if the file was ordered 1,2,3,4,5. no exchanges and 4 compariosns, stop after 1 pass. That's the best casd scenario
-. linear performance if file is in order.
+- linear performance if file is in order already, no need to exchange and it's an early out.
 
 
 #### Quicksort
@@ -184,6 +178,9 @@ the first 0 goes to a
 cost to partition: o(n)
 to sort using quicksort usually is: n*logn, if worst case is n^2 or quadratic.
 - needs to be in an array so can do random access of the array for quicksort.
+
+**Summary**:
+- n*logn cost. it's O(n) cost for each partition, each value needs to be compared to pivot. There are logn levels.
 
 
 #### Selection sort
@@ -224,7 +221,6 @@ The best case and average runtime complexity of quickselect are both O(). In the
 
 #### insertion sort
 
-Insertion sort algorithm
 Insertion sort is a sorting algorithm that treats the input as two parts, a sorted part and an unsorted part, and repeatedly inserts the next value from the unsorted part into the correct location in the sorted part.
 
 
@@ -250,7 +246,7 @@ for (i = 1; i < numbersSize; ++i) {
    the elements in the sorted part that are larger. Once a smaller or equal element is found in the sorted part, the
     current element has been inserted in the correct location and the while loop terminates.
 
--Insertion sort's typical runtime is O(N^2). If a list has N elements, the outer loop executes N - 1 times. For each
+- Insertion sort's typical runtime is O(N^2). If a list has N elements, the outer loop executes N - 1 times. For each
  outer loop execution, the inner loop may need to examine all elements in the sorted part. Thus, the inner loop
   executes on average n/2 times. So the total number of comparisons is proportional to (n-1)*(n/2), or O(N^2). Other
    sorting algorithms involve more complex algorithms but faster execution.

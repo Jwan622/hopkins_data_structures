@@ -23,131 +23,134 @@ public class PriorityQueue {
         }
     }
 
-    private LinkList list;
+    public MinHeap heap;
 
-    public PriorityQueue() {
-        list = new LinkList();
+    public PriorityQueue(int freqTableSize) {
+        heap = new MinHeap(freqTableSize);
     }
 
     public void insert(PQueueNode node) {
-        list.insert(node);
+        heap.insert(node);
     }
 
     public PQueueNode remove() {
-        return list.remove();
+        return heap.removeMin();
     }
 
-    public void displayList() {
-        System.out.println("Smallest Value to Largest");
-        list.display();
+    public void build() {
+        heap.build();
     }
 
-    public void displayPreorder(PQueueNode node) {
+    public void displayPreorder() {
         System.out.println("Displaying Preorder");
-        list.displayPreorder(node);
+        heap.displayPreorder(heap.min());
     }
 
     public int size() {
-        return list.size();
+        return heap.size;
     }
 
-    /**
-     * An internal class used by PriorityQueue. this LinkedList is how PriorityQueue is implemented.
-     */
-    private class LinkList {
-        private PQueueNode head;
+    public class MinHeap {
+        private PQueueNode[] heap;
         private int size;
 
-        private LinkList() {
-            this.head = null;
+        public MinHeap(int freqTableSize) {
+            this.heap = new PQueueNode[freqTableSize];
             this.size = 0;
         }
 
-        /**
-         * Inserts node right before the node with a higher integer data. PQueueNodes with higher frequencies are later in the list.
-         * @param node
-         */
-        private void insert(PQueueNode node) {
-            int integerData = node.integerData;
-            PQueueNode previous = null;
-            PQueueNode current = this.head;
-            boolean newHead = true;
-            while (current != null && integerData > current.integerData) {
-                previous = current;
-                current = current.next;
-                newHead = false;
-            }
+        public void insert(PQueueNode node) {
+            heap[size] = node;
+            int endOfHeap = size() - 1;
+            int parent = parent(endOfHeap);
 
-            if (current == null && previous == null) {
-                this.head = node;
-                this.head.next = null;
-            } else {
-                if (newHead && node.integerData < current.integerData) {
-                    this.head = node;
-                } else {
-                    if (previous != null) {
-                        previous.next = node;
-                    }
-                }
-                node.next = current;
-
-                if (previous != null && current != null && node.integerData == current.integerData && node.data.compareTo(current.data) > 0) {
-                    System.out.println("adding item: " + node.data);
-                    node.next = current.next;
-                    current.next = node;
-                    previous.next = current;
-
-                    PQueueNode temp = current;
-                    current = node;
-                    node = temp;
-                }
-
-//                if (newHead && node.integerData == current.integerData && node.data.compareTo(current.data) > 0) {
-//                    System.out.println("inside newhead line");
-//                    node.next = null;
-//                    node.next = current.next;
-//                    current.next = node;
-//                }
-
-                if (node.integerData == current.integerData) {
-                    System.out.println("pushing equivalent node");
-                    node.next = null;
-                    node.next = current.next;
-                    current.next = node;
-                }
+            while ((parent != endOfHeap && (heap[endOfHeap].integerData < heap[parent(endOfHeap)].integerData)) ||
+                    (parent != endOfHeap && heap[endOfHeap].integerData == heap[parent(endOfHeap)].integerData && (heap[endOfHeap].data.compareTo(heap[parent(endOfHeap)].data) < 0))) {
+                swap(endOfHeap, parent);
+                endOfHeap = parent;
+                parent = parent(endOfHeap);
             }
             this.size++;
         }
 
-        private PQueueNode remove() {
-            if(null == head) {
-                return null;
+        public void build() {
+            for (int i = size() / 2; i >= 0; i--) {
+                minHeapify(i);
             }
-            PQueueNode temp = this.head;
-            head = head.next;
-            // decrement size of priority queue
-            this.size--;
-            return temp;
         }
 
-        private int size() {
-            return this.size;
+        public PQueueNode min() {
+            return heap[0];
         }
 
-        private void display() {
-            PQueueNode current = this.head;
-
-            // iterate until the end == current == null
-            while (current != null) {
-                System.out.println(current.stringify());
-                current = current.next;
+        public PQueueNode removeMin() {
+            if (size() == 0) {
+                throw new IllegalStateException("Min heap is empty!");
+            } else if (size() == 1) {
+                PQueueNode min = heap[0];
+                size--;
+                return min;
             }
 
-            System.out.println("size of frequency pqueue: " + size());
-            System.out.println("");
+            // remove the last item, and set it as new root
+            PQueueNode min = heap[0];
+            PQueueNode lastItem = heap[size() - 1];
+            heap[0] = lastItem;
+            size--;
+
+            // bubble the root node down until heap property is maintained
+            minHeapify(0);
+
+            // return min key
+            return min;
         }
 
-        private void displayPreorder(PQueueNode node) {
+        private void minHeapify(int i) {
+            int left = left(i);
+            int right = right(i);
+            int smallest;
+
+            // find the smallest key between current node and its left child. If equal values are, do nothing
+            if (left <= size() - 1 && heap[left].integerData < heap[i].integerData) {
+                smallest = left;
+            } else {
+                smallest = i;
+            }
+
+            // find the smallest key between current smallest (current or left) and its right child. If equal values are, do nothing
+            if (right <= size() - 1 && heap[right].integerData < heap[smallest].integerData) {
+                smallest = right;
+            }
+
+            // if the smallest key is not the current key then bubble-down it.
+            if (smallest != i) {
+                swap(i, smallest);
+                minHeapify(smallest);
+            }
+        }
+
+        private int right(int i) {
+            return 2 * i + 2;
+        }
+
+        private int left(int i) {
+            return 2 * i + 1;
+        }
+
+        private int parent(int i) {
+            if (i % 2 == 1) {
+                return i / 2;
+            }
+            return (i - 1) / 2;
+        }
+
+        private void swap(int i, int parent) {
+            PQueueNode temp = heap[parent];
+            heap[parent] = heap[i];
+            heap[i] = temp;
+        }
+
+        public void displayPreorder(PQueueNode node) {
             if (node == null) {
                 return;
             }

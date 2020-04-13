@@ -29,7 +29,7 @@ O(n * logn) is the cost across teh board. in order data is worse than reverse or
 
 #### Quadratic selection sort (selection sort)
 - takes extra space so selection sort works better because it's on a smaller amount of data. 
-- k =4 , so divide the original file into 4 subfiles. use the black aux array to store the largest of each subfile.
+- k=4 where k is number of subfiles, and n is 16 which is size of file. The aux space will be size of k. so divide the original file into 4 subfiles. use the black aux array to store the largest of each subfile by using bubble or selection sort.
 - then from aux file, pull largest and put it in the final sorted array. replace it with the next largest number from the subfile from where it came.
 - final new largest item from the subfile, put it in the aux file.
 
@@ -38,6 +38,10 @@ O(n * logn) is the cost across teh board. in order data is worse than reverse or
 What k should you use? there is an optimal k, but if k is too big it gets worse.nadir is approx sqrt(n)
 
 ![quad2](quad2.png)
+
+**Summary**:
+- Cost: O(n^(3/2))
+- could use a linked implementation. The reduction of hte subfiles could leverage the linked list to make it more efficient.
 
 
 ## insertion sort
@@ -72,14 +76,15 @@ optimal ks?
 
 
 **summary**: 
-cost: n(logn)^2
+- cost: n(logn)^2
 - leverages insertion sort
-- needs tobe done in an array
-- no sensitive to order
+- as subfiles get larger, more ordered, so quadratic perf of insertion sort is a non-issue
+- needs to be done in an array for random access features to jump to next element for subfile.
+- not sensitive to order
 
 
 
-#### merging straigt 2 way
+#### merging straight 2 way
 - basis for external sorting, which use higher order but 2 way merge is close.
 
 - assumes 2 pieces, both sorted already. merging assumes 2 pieces, k - way merge assumes k pieces.
@@ -107,8 +112,8 @@ cost:
 #### natural merge
 - leverage order in data, exploits the order.
 - uses replacement selection, to create original pieces that we do the merging with.
+- if record incraeses, goes into same subfile. when smaller, we restart a new subfile. we move through the file sequentially
 
-one pass at beginning to create subfile. we restart a subfile when the number get smaller.
 
 6 subfiles here:
 
@@ -118,8 +123,8 @@ now we have 6 subfiles, we can do the passes.
 
 
 **Summary**:
-- for random file, about the same as straight merge.
-- for in order files, much better. O(n) in ordrered, you pass through and end up with 1 subfile and when you have 1 subfile, you're done.
+- for random file, about the same as straight merge above.
+- for in order files, much better. O(n) in ordrered, you pass through 1 time and end up with 1 subfile and when you have 1 subfile, you're done already.
 - reversed file, quadratic. n files of size 1. then you have to merge. O(n^2)
 
 
@@ -175,11 +180,9 @@ total cost:2k + 2n. so O(n) + O(k). But k is usually some function of O(n) so co
 - O(n) is avg cost. linear!
 
 
-#### Radix sort is based on counting.
-- alphanumerica can be turned into numerical data.
-
-cost of radix is d * cost of counting sort = d * O(n) where d is number of columns. on each column you use counting sort.
-
+#### Radix sort is based on counting sort
+- cost of counting sort is O(n).
+- cost of radix sort is d * cost of counting sort = d * O(n) where d is number of columns. on each column you use counting sort.
 
 
 #### Searching
@@ -189,31 +192,34 @@ cost of radix is d * cost of counting sort = d * O(n) where d is number of colum
 - record = unit of data
 - file (of size n) collection of units. not a system file. collection of records.
 - a key is the  portion of data record that we use for retrieval. we use the key to find a record. 
-- primary key vs secondary. primary keys are unqiue.
-- external keys are when we store it outside of the record. we store it outside of the record, but if separated, got a problem of keeping a link.
+- primary key vs secondary. primary keys are unique.
+- external keys are when we store it outside of the record. we store it outside of the record, but if separated (say linking keys get deleted), got a problem of losing the connection.
 - external searching vs internal searching. is it small enough to bring it into main memory?
 
+- searching relies on data being sorted. some strategies do not need the data to be unsorted, but still organized in some way.
 
-searching relies on data being sorted. some unsorted.
-
-### searching when sorted
+## searching when sorted
 - anytime changes to data, need to sort again.
 
 ![](sort_types.png)
 
-- sequential search, binary, interpolation search, search trees, 
-- if a lot of insertions and deletions, thne need to be efficient.
+- rely on data being sorted: sequential search, binary, interpolation search, search trees, 
+- if a lot of insertions and deletions, then need to be efficient. If a lot of insertions, make sure insertions are efficient.
 
 #### sequential search:
 - if you delete, you have to shift rest of records
 - you could instead of resorting upon deleting, just mark the area in the area which makes deletions faster. Does not affect retrieval time.
+- n/2 cost on average
+- naive or brute force search... it's common sense is what naive means. brute force- simplistic, just does one thing after another until it's done.
+- also works with linked lists.
+- if you marked delete, does improve deletion time, does not affect retrieval time.
 
 
 #### Binary search
 
-
 - need to use an array. Need to find middle element. cannot use dynamically allocated space with a linked list.
 - O(logn) on avg because you can throw away half of file on each search so number of items that falls off grows quickly. 
+- only suitable for small files.
 
 ### Interpolation search
 - cousin to binary search
@@ -228,7 +234,7 @@ In searching, y coordinates the addresses, and x coordinates are the keys.
 
 **Summary**:
 - cost: log(logn), if not can be as bad as O(n). 
-- requires keys to be uniformly distribued across search space.
+- requires keys to be uniformly distributed across search space.
 - if not, interpolation will not get us to desired location and will be as bad as O(n).
 
 
@@ -250,10 +256,30 @@ over time, this helps! but you do have to search two files. the index and the ma
 
 
 **Summary**:
+- O(k)
 - needs extra space to store index. O(n+k) where k is size of index. cost is searching index and searching the piece indentified by the index.
 - index could be stored for binary search.
 - rest of file can be array or list, static or dynamic allocation.
 - get file pieces all of the same size, that's optimal.
 - need ot make sure index gets you to even places in the jump file.. need to make sure the pieces created by the index in the jump file are even.. if you do lots of insertions and deletions, the pieces might be uneven so you have to rebuild.
+- suggested starting point is k = sqrt(n). good starting point.
 
+typical cost for index sequential search is:
+- each piece is n/k but on avg you search half of each piece so it's really n/2k. searching index is k/2 where k is number of items in index. So typical cost is 
+
+
+    O(N/2k + k/2)  = O((N+k*k)/2k) = O((N+N)/2k) = O(2N)/2N^0.5) = O(N)/N^0.5) = O(N^0.5) = O(k)
+    
+step 3: I think k*k = N because ideally the size of k is the sqrt(n)
+step 4: add the Ns on top. replace k with sqrt(n) on the denom
+step 5: remember that x/x^(0.5) is just == x^(0.5). So step 5 makes sense. 
+
+If k (index entries) is too big, as you can see, too much time searching in the index. if k is too small pieces in the main file is too big. suggested starting point is k = sqrt(n). good starting point.
+
+
+Problem for say using SSN for an organization centered around a certain state. SSN are ordered by state so if an organization is in a certain state like Maryland then all of the SSN will be from 200-XXX (most of them). The problem is that even though you have an index, you'd have a main file looking like this:
+
+![counting_unbalanced](counting_unbalanced.png)
+
+not that efficient results because it would create pieces of the file that are uneven in size. small pieces you' wouldn't go there often. most of time searching in the big piece doing sequential search so cost would be k/2 where k is the size of big piece.
 

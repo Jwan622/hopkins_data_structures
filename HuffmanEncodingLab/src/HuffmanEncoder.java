@@ -71,7 +71,8 @@ public class HuffmanEncoder {
 
         String freqTableFileName = args[2];
         File freqTableFile = new File(freqTableFileName);
-        FileReader freqTableFileReader = new FileReader(freqTableFile);
+        FileReader freqTableFileReaderForLineCount = new FileReader(freqTableFile);
+        BufferedReader bufferedFreqTableFileReaderForLineCount = new BufferedReader(freqTableFileReaderForLineCount);
 
         String encodedOutputFileName = args[3];
         File encodedOutputFile = new File(encodedOutputFileName);
@@ -82,24 +83,28 @@ public class HuffmanEncoder {
         //writer to the output file. Using a PrintWriter to take advantage of printf
         outputWriterEncodedText = new PrintWriter(new FileWriter(encodedOutputFile));
         outputWriterCleanText = new PrintWriter(new FileWriter(clearTextOutputFile));
-        BufferedReader freqTableBufferedReader = new BufferedReader(freqTableFileReader);
+        BufferedReader freqTableBufferedReader = new BufferedReader(freqTableFileReaderForLineCount);
         BufferedReader clearTextBr = new BufferedReader(clearTextFileReader);
         BufferedReader encodedTextBr = new BufferedReader(encodedTextFileReader);
 
         // creating a priority queue q. makes a min-priority queue(min-heap).
-        PriorityQueue pqueue = new PriorityQueue();
+        int freqTableSize = 0;
+        while (bufferedFreqTableFileReaderForLineCount.readLine() != null) freqTableSize++;
+        PriorityQueue pqueue = new PriorityQueue(freqTableSize);
 
+        FileReader freqTableFileReader = new FileReader(freqTableFile);
+        BufferedReader bufferedFreqTableFileReader = new BufferedReader(freqTableFileReader);
         String freqLine;
-        while((freqLine = freqTableBufferedReader.readLine()) != null) {
+
+        while((freqLine = bufferedFreqTableFileReader.readLine()) != null) {
             // creating a Huffman node object
             // and add it to the priority queue.
-
             String[] freqArray = freqLine.split(" ");
 
             // add functions adds the huffman node to the queue.
             pqueue.insert(pqueue.new PQueueNode(Integer.parseInt(freqArray[2]), freqArray[0]));
         }
-        pqueue.displayList();
+        pqueue.build();
 
         // create a root node
         Tree huffmanTree = new Tree();
@@ -109,7 +114,7 @@ public class HuffmanEncoder {
         // all the nodes are extracted.
         System.out.println("building tree...");
         huffmanTree.build(pqueue);
-        pqueue.displayPreorder(huffmanTree.root);
+        pqueue.displayPreorder();
         // print the codes by traversing the tree
         System.out.println(DELIMITER);
         System.out.println("Printing out huffman Tree Encoding with " + huffmanTree.root.stringify() + " as root");
