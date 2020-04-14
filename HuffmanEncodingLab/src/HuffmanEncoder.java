@@ -64,6 +64,8 @@ public class HuffmanEncoder {
         String clearTextFileName = args[0];
         File clearTextFile = new File(clearTextFileName);
         FileReader clearTextFileReader = new FileReader(clearTextFile);
+        BufferedReader bufferedClearTextReader = new BufferedReader(clearTextFileReader);
+        String clearTextLine;
 
         String encodedTextFileName = args[1];
         File encodedTextFile = new File(encodedTextFileName);
@@ -120,6 +122,12 @@ public class HuffmanEncoder {
         System.out.println("Printing out huffman Tree Encoding with " + huffmanTree.root.stringify() + " as root");
         huffmanTree.printEncoding(huffmanTree.root, "");
 
+
+        while((clearTextLine = bufferedClearTextReader.readLine()) != null){
+            char[] letters = clearTextLine.toCharArray();
+
+
+        }
         // close every reader.
         freqTableBufferedReader.close();
         encodedTextBr.close();

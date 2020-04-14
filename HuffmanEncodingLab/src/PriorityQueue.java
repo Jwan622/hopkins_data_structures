@@ -61,16 +61,26 @@ public class PriorityQueue {
 
         public void insert(PQueueNode node) {
             heap[size] = node;
+            this.size++;
             int endOfHeap = size() - 1;
             int parent = parent(endOfHeap);
 
-            while ((parent != endOfHeap && (heap[endOfHeap].integerData < heap[parent(endOfHeap)].integerData)) ||
-                    (parent != endOfHeap && heap[endOfHeap].integerData == heap[parent(endOfHeap)].integerData && (heap[endOfHeap].data.compareTo(heap[parent(endOfHeap)].data) < 0))) {
+            while ((parent != endOfHeap && (heap[endOfHeap].integerData < heap[parent].integerData)) ||
+                    (parent != endOfHeap && (heap[endOfHeap].integerData == heap[parent].integerData) && heap[endOfHeap].data.length() < heap[parent].data.length()) ||
+                    (parent != endOfHeap && heap[endOfHeap].integerData == heap[parent].integerData && heap[endOfHeap].data.length() == heap[parent].data.length() && (heap[endOfHeap].data.compareTo(heap[parent].data) < 0))) {
                 swap(endOfHeap, parent);
+
+                // set endOfHeap to parent. parent becomes the parent of the old parent.
                 endOfHeap = parent;
                 parent = parent(endOfHeap);
             }
-            this.size++;
+        }
+
+        public void printHeap() {
+            for (int i = 0; i < size; i++) {
+                System.out.print("|" + heap[i].data + ":" + heap[i].integerData);
+            }
+            System.out.println();
         }
 
         public void build() {
@@ -105,20 +115,27 @@ public class PriorityQueue {
             return min;
         }
 
+        // bubble node down until heap is valid.
         private void minHeapify(int i) {
             int left = left(i);
             int right = right(i);
             int smallest;
 
             // find the smallest key between current node and its left child. If equal values are, do nothing
-            if (left <= size() - 1 && heap[left].integerData < heap[i].integerData) {
+            if (left <= size() - 1 && (heap[left].integerData < heap[i].integerData)) {
                 smallest = left;
             } else {
                 smallest = i;
             }
 
-            // find the smallest key between current smallest (current or left) and its right child. If equal values are, do nothing
-            if (right <= size() - 1 && heap[right].integerData < heap[smallest].integerData) {
+            // find the smallest key between current smallest (current or left) and its right child. If equal, use tiebreakers.
+            if (right <= size() - 1 && (heap[right].integerData < heap[smallest].integerData ||
+                    // if a child value == smallest value, and the right child is simpler, the right gets swapped with parent
+                    (heap[right].integerData == heap[smallest].integerData && heap[right].data.length() < heap[smallest].data.length()) ||
+
+                    // if a child value == smallest value, and is the same length as the smallest, are both length 1, the right gets swapped with parent
+                    (heap[right].integerData == heap[smallest].integerData && heap[right].data.length() == 1 && heap[smallest].data.length() == 1 && heap[right].data.compareTo(heap[smallest].data) < 0))
+                ) {
                 smallest = right;
             }
 

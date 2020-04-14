@@ -23,8 +23,11 @@ public class Tree {
     public void build(PriorityQueue pqueue) throws RuntimeException {
         while (pqueue.size() > 1) {
             // first min extract.
+            System.out.println("first min: " +  pqueue.heap.min().data);
             PriorityQueue.PQueueNode firstMin = pqueue.remove();
             // second min extract.
+
+            System.out.println("second min: " +  pqueue.heap.min().data);
             PriorityQueue.PQueueNode secondMin = pqueue.remove();
             // new node f which is equal
             int newIntegerData = firstMin.integerData + secondMin.integerData;
