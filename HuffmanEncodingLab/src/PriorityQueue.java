@@ -42,7 +42,6 @@ public class PriorityQueue {
     }
 
     public void displayPreorder() {
-        System.out.println("Displaying Preorder");
         heap.displayPreorder(heap.min());
     }
 

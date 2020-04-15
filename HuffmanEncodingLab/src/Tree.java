@@ -23,11 +23,9 @@ public class Tree {
     public void build(PriorityQueue pqueue) throws RuntimeException {
         while (pqueue.size() > 1) {
             // first min extract.
-            System.out.println("first min: " +  pqueue.heap.min().data);
             PriorityQueue.PQueueNode firstMin = pqueue.remove();
             // second min extract.
 
-            System.out.println("second min: " +  pqueue.heap.min().data);
             PriorityQueue.PQueueNode secondMin = pqueue.remove();
             // new node f which is equal
             int newIntegerData = firstMin.integerData + secondMin.integerData;
@@ -67,37 +65,7 @@ public class Tree {
                     }
                 }
             }
-//            if (firstMin.data.length() == 1 && secondMin.data.length() == 1) {
-//                if (firstMin.data.compareTo(secondMin.data) < 0) {
-//                    left = firstMin;
-//                    right = secondMin;
-//                    newData = this.createNewData(firstMin.data, secondMin.data);
-//                } else {
-//                    right = firstMin;
-//                    left = secondMin;
-//                    newData = this.createNewData(secondMin.data, firstMin.data);
-//                }
-//            } else if (firstMin.data.length() == 1 && secondMin.data.length() > 1) {
-//                left = firstMin;
-//                right = secondMin;
-//                newData = sort(this.createNewData(firstMin.data, secondMin.data));
-//            } else if (firstMin.data.length() > 1 && secondMin.data.length() == 1) {
-//                right = firstMin;
-//                left = secondMin;
-//                newData = sort(this.createNewData(secondMin.data, firstMin.data));
-//            } else {
-//                if (firstMin.data.compareTo(secondMin.data) < 0) {
-//                    left = firstMin;
-//                    right = secondMin;
-//                    newData = sort(this.createNewData(firstMin.data, secondMin.data));
-//                } else if (firstMin.data.compareTo(secondMin.data) > 0) {
-//                    right = firstMin;
-//                    left = secondMin;
-//                    newData = sort(this.createNewData(secondMin.data, firstMin.data));
-//                } else {
-//                    throw new RuntimeException("Two elements in priority queue cannot have same string data");
-//                }
-//            }
+
             PriorityQueue.PQueueNode newCombinedHuffmanNode = pqueue.new PQueueNode(newIntegerData, newData);
             // Assign to the combinedNode left and right children
             newCombinedHuffmanNode.leftChild = left;
@@ -124,5 +92,46 @@ public class Tree {
         // right sub-tree of the generated tree.
         printEncoding(root.leftChild, huffmanCode + "0");
         printEncoding(root.rightChild, huffmanCode + "1");
+    }
+
+    public StringBuilder search(PriorityQueue.PQueueNode root, StringBuilder huffmanCode, String letter) {
+        if (root.leftChild == null && root.rightChild == null && root.data.equals(letter)) {
+            return huffmanCode;
+        }
+
+        // if we go to left then add "0" to the code.
+        // if we go to the right add "1" to the code.
+        // recursive calls for left and
+        // right sub-tree of the generated tree.
+        if (root.leftChild.data.contains(letter)) {
+            search(root.leftChild, huffmanCode.append("0"), letter);
+        } else {
+            search(root.rightChild, huffmanCode.append("1"), letter);
+        }
+
+        return huffmanCode;
+    }
+
+    public StringBuilder searchForLetter(String code) {
+        char[] codeArray = code.toCharArray();
+        StringBuilder decoded = new StringBuilder();
+        PriorityQueue.PQueueNode root1 = this.root;
+
+        for (int i = 0; i < code.length(); i++) {
+            if (root1.leftChild == null && root1.rightChild == null) {
+                decoded.append(root1.data);
+                root1 = this.root;
+                i--;
+                continue;
+            }
+
+            if (Integer.parseInt(String.valueOf(codeArray[i])) == 0) {
+                root1 = root1.leftChild;
+            } else if (Integer.parseInt(String.valueOf(codeArray[i])) == 1) {
+                root1 = root1.rightChild;
+            }
+        }
+
+        return decoded.append(root1.data).append("\n");
     }
 }

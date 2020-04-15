@@ -54,8 +54,6 @@ Traverse the tree formed starting from the root. Maintain an auxiliary array. Wh
  * @author Jeffrey Wan
  */
 public class HuffmanEncoder {
-    private static PrintWriter outputWriterCleanText;
-    private static PrintWriter outputWriterEncodedText;
     private static String DELIMITER = "-----------------------------------";
 
     // This code is contributed by Kunwar Desh Deepak Singh
@@ -65,7 +63,6 @@ public class HuffmanEncoder {
         File clearTextFile = new File(clearTextFileName);
         FileReader clearTextFileReader = new FileReader(clearTextFile);
         BufferedReader bufferedClearTextReader = new BufferedReader(clearTextFileReader);
-        String clearTextLine;
 
         String encodedTextFileName = args[1];
         File encodedTextFile = new File(encodedTextFileName);
@@ -82,12 +79,13 @@ public class HuffmanEncoder {
         String clearTextOutputFileName = args[4];
         File clearTextOutputFile = new File(clearTextOutputFileName);
 
-        //writer to the output file. Using a PrintWriter to take advantage of printf
-        outputWriterEncodedText = new PrintWriter(new FileWriter(encodedOutputFile));
-        outputWriterCleanText = new PrintWriter(new FileWriter(clearTextOutputFile));
+        //writers to the output files.
+        PrintWriter outputWriterEncodedTextWriter = new PrintWriter(new FileWriter(encodedOutputFile));
+        PrintWriter outputWriterClearTextWriter = new PrintWriter(new FileWriter(clearTextOutputFile));
+
         BufferedReader freqTableBufferedReader = new BufferedReader(freqTableFileReaderForLineCount);
-        BufferedReader clearTextBr = new BufferedReader(clearTextFileReader);
-        BufferedReader encodedTextBr = new BufferedReader(encodedTextFileReader);
+        BufferedReader clearTextBufferedReader = new BufferedReader(clearTextFileReader);
+        BufferedReader encodedTextBufferedReader = new BufferedReader(encodedTextFileReader);
 
         // creating a priority queue q. makes a min-priority queue(min-heap).
         int freqTableSize = 0;
@@ -96,8 +94,8 @@ public class HuffmanEncoder {
 
         FileReader freqTableFileReader = new FileReader(freqTableFile);
         BufferedReader bufferedFreqTableFileReader = new BufferedReader(freqTableFileReader);
-        String freqLine;
 
+        String freqLine;
         while((freqLine = bufferedFreqTableFileReader.readLine()) != null) {
             // creating a Huffman node object
             // and add it to the priority queue.
@@ -105,33 +103,33 @@ public class HuffmanEncoder {
 
             // add functions adds the huffman node to the queue.
             pqueue.insert(pqueue.new PQueueNode(Integer.parseInt(freqArray[2]), freqArray[0]));
-        }
+        };
         pqueue.build();
-
-        // create a root node
         Tree huffmanTree = new Tree();
-        // Here we will extract the two minimum value
-        // from the heap each time until
-        // its size reduces to 1, extract until
-        // all the nodes are extracted.
-        System.out.println("building tree...");
+        output("Building tree...");
         huffmanTree.build(pqueue);
-        pqueue.displayPreorder();
+        output(DELIMITER);
+        output("Displaying preorder traversal:");
+        pqueue.displayPreorder();   
         // print the codes by traversing the tree
-        System.out.println(DELIMITER);
-        System.out.println("Printing out huffman Tree Encoding with " + huffmanTree.root.stringify() + " as root");
+        output(DELIMITER);
+        output("Printing out huffman Tree Encoding with " + huffmanTree.root.stringify() + " as root");
         huffmanTree.printEncoding(huffmanTree.root, "");
 
+        // encoding the clear text file
+        StringBuilder encoded = encode(huffmanTree, bufferedClearTextReader);
+        output(DELIMITER);
+        output("Clear Text to Huffman Encoded: \n" + encoded, outputWriterEncodedTextWriter);
 
-        while((clearTextLine = bufferedClearTextReader.readLine()) != null){
-            char[] letters = clearTextLine.toCharArray();
-
-
-        }
+        // decode the encoded file
+        StringBuilder decoded = decode(huffmanTree, encodedTextBufferedReader);
+        output(DELIMITER);
+        output("Huffman Encoded to Clear Text: \n" + decoded, outputWriterClearTextWriter);
         // close every reader.
         freqTableBufferedReader.close();
-        encodedTextBr.close();
-        clearTextBr.close();
+        encodedTextBufferedReader.close();
+        clearTextBufferedReader.close();
+        outputWriterEncodedTextWriter.close();
     }
 
 
@@ -142,5 +140,37 @@ public class HuffmanEncoder {
      */
     private static void output(String message) {
         System.out.println(message);
+    }
+
+    private static void output(String message, PrintWriter writer) {
+        System.out.println(message);
+        writer.println(message);
+    }
+
+    private static StringBuilder encode(Tree huffmanTree, BufferedReader bufferedClearTextReader) throws IOException {
+        String clearTextLine;
+        StringBuilder finalCode = new StringBuilder();
+        while((clearTextLine = bufferedClearTextReader.readLine()) != null){
+            // get rid of whitespaces
+            clearTextLine = clearTextLine.replaceAll("\\s+", "");
+            char[] letters = clearTextLine.toCharArray();
+            for (int i = 0; i < letters.length; i++) {
+                StringBuilder code = huffmanTree.search(huffmanTree.root, new StringBuilder(), String.valueOf(letters[i]).toUpperCase());
+                finalCode.append(code);
+            }
+        }
+
+        return finalCode;
+    }
+
+    private static StringBuilder decode(Tree huffmanTree, BufferedReader encodedTextBufferedReader) throws IOException {
+        String encodedTextLine;
+        StringBuilder finalDecoded = new StringBuilder();
+        while((encodedTextLine = encodedTextBufferedReader.readLine()) != null){
+            StringBuilder decoded = huffmanTree.searchForLetter(encodedTextLine);
+            finalDecoded.append(decoded);
+        }
+
+        return finalDecoded;
     }
 }
