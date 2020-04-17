@@ -1,3 +1,10 @@
+/**
+ * Algo for search:
+ *  * 1. Build a min heap via a priority queue where each node has alphabetic data and integerdata
+ *  * 2. Extract two minimum frequency nodes from min heap. Add the nodes and put back in priority queue.
+ *  * 3. Do this until one node remains.
+ */
+
 public class Tree {
     public PriorityQueue.PQueueNode root;
     public final String REVERSE = "reverse";
@@ -95,7 +102,7 @@ public class Tree {
     }
 
     public StringBuilder search(PriorityQueue.PQueueNode root, StringBuilder huffmanCode, String letter) {
-        if (root.leftChild == null && root.rightChild == null && root.data.equals(letter)) {
+        if (root.leftChild == null && root.rightChild == null) {
             return huffmanCode;
         }
 
@@ -133,5 +140,16 @@ public class Tree {
         }
 
         return decoded.append(root1.data).append("\n");
+    }
+
+    /**
+     *
+     * Exception to indicate that LinkedList is empty. Occurs when popping from an empty list.
+     */
+    class LetterNotFound extends RuntimeException {
+        public LetterNotFound(String msg) {
+            // used in the parent class when a letter does not have an encoding
+            super(msg);
+        }
     }
 }
