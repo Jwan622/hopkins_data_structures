@@ -141,15 +141,4 @@ public class Tree {
 
         return decoded.append(root1.data).append("\n");
     }
-
-    /**
-     *
-     * Exception to indicate that LinkedList is empty. Occurs when popping from an empty list.
-     */
-    class LetterNotFound extends RuntimeException {
-        public LetterNotFound(String msg) {
-            // used in the parent class when a letter does not have an encoding
-            super(msg);
-        }
-    }
 }

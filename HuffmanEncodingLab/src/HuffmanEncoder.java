@@ -37,6 +37,7 @@ import java.io.*;
  */
 public class HuffmanEncoder {
     private static String DELIMITER = "-----------------------------------";
+    private static final String[] CHARS_TO_IGNORE = {".", ",", "?", "!", ")", "(", "/", "$", "#", "*"};
 
     public static void main(String args[]) throws IOException {
         // this creates a reference to a clear text file with text to be encoded.
@@ -118,6 +119,7 @@ public class HuffmanEncoder {
         encodedTextBufferedReader.close();
         bufferedClearTextReader.close();
         outputWriterEncodedTextWriter.close();
+        outputWriterClearTextWriter.close();
         bufferedFreqTableFileReaderForLineCount.close();
     }
 
@@ -145,17 +147,22 @@ public class HuffmanEncoder {
      * @return
      * @throws IOException
      */
-    private static StringBuilder encode(Tree huffmanTree, BufferedReader bufferedClearTextReader) throws IOException, Tree.LetterNotFound {
-        final String[] CHARS_TO_IGNORE = {".", ",", "?", "!"};
+    private static StringBuilder encode(Tree huffmanTree, BufferedReader bufferedClearTextReader) throws IOException, LetterNotFound {
         String clearTextLine;
         StringBuilder finalCode = new StringBuilder();
         while((clearTextLine = bufferedClearTextReader.readLine()) != null) {
-            finalCode.append(clearTextLine + " encodes to: ");
-            // get rid of whitespaces
+            finalCode.append(String.format("%1$35s", clearTextLine + " <encodes to>: "));
             try {
+                // get rid of whitespaces
                 clearTextLine = clearTextLine.replaceAll("\\s+", "");
                 char[] letters = clearTextLine.toCharArray();
-                //if character is one of the invalid characters, just ignore it.
+
+                // if text line is entirely ignorable characters, throw an error, handle it, and move on.
+                Boolean stringHasEncodables = hasEncodables(letters);
+                if (!stringHasEncodables) {
+                    throw new LetterNotFound("<Not a valid code>");
+                }
+
                 outerLoopForClear:
                 for (int i = 0; i < letters.length; i++) {
                     for (String character: CHARS_TO_IGNORE) {
@@ -163,14 +170,16 @@ public class HuffmanEncoder {
                             continue outerLoopForClear;
                         }
                     }
+
                     StringBuilder code = huffmanTree.search(huffmanTree.root, new StringBuilder(), String.valueOf(letters[i]).toUpperCase());
                     finalCode.append(code);
                 }
-            } catch (Tree.LetterNotFound error){
+            } catch (LetterNotFound error){
+                finalCode.append(error.getMessage());
                 output("<" + clearTextLine + " is not a valid string to encode. Moving onto the next line>");
             }
 
-            finalCode.append("\n");
+            finalCode.append("\n\n");
         }
         return finalCode;
     }
@@ -184,5 +193,47 @@ public class HuffmanEncoder {
         }
 
         return finalDecoded;
+    }
+
+    /**
+     * if string is solely comprised of non-encodable characters, return false. If it has an encodable letter
+     * then we can proceed and try to encode
+     * @param letters the character array of letters
+     * @return return true if there are encodable letters present. returns false if text line is entirely ignorable characters like ... or *.
+     */
+    private static Boolean hasEncodables(char[] letters) {
+        boolean stringHasEncodables = false;
+        Boolean[] allCheck = new Boolean[letters.length];
+
+        for (int i = 0; i < letters.length; i++) {
+            boolean found = false;
+            for (String errorChar: CHARS_TO_IGNORE) {
+                if (errorChar.equals(String.valueOf(letters[i]))) {
+                    found = true;
+                    break;
+                }
+            }
+            allCheck[i] = found;
+        }
+
+        for (Boolean bool : allCheck) {
+            if (!bool) {
+                stringHasEncodables = true;
+                break;
+            }
+        }
+
+        return stringHasEncodables;
+    }
+
+    /**
+     *
+     * Exception to indicate that LinkedList is empty. Occurs when popping from an empty list.
+     */
+    static class LetterNotFound extends RuntimeException {
+        public LetterNotFound(String msg) {
+            // used in the parent class when a letter does not have an encoding
+            super(msg);
+        }
     }
 }
