@@ -1,66 +1,140 @@
 import java.io.*;
 import java.util.Random;
 
+/**
+ * This class is the runner class for reading in the unsorted input files, sorting them through the 4 Quicksort variants
+ * and 1 heapsort algorithm, writing the sorted data to output files with their respective names, and outputting a timetable
+ * of runtimes with their respective sorts.
+ */
 public class SortComparison {
     private static String inputFolderPath = "inputData/";
     private static String outputFolderName = "outputData/";
-    private static int fileLength = 50;
 
     public static void main(String args[]) throws IOException, Quicksort.InvalidPivot, Quicksort.InvalidPartitionStoppingChoice {
+        // this generates the input files that need to be sorted
         generateDirectory("inputData");
-        generateInputFilesSinceTheLabInputFilesAreWrong();;
+        generateInputFilesSinceTheLabInputFilesAreWrong();
+
+        // this gets the input folder and files of the raw unsorted input files that we just created
         File folder = new File(inputFolderPath);
         File[] listOfDataFiles = folder.listFiles();
+        fileSort(listOfDataFiles);
 
-        File folderOutput = new File(outputFolderName);
+        File timeTableOutputFile = new File(outputFolderName + "timeTables.txt");
+        PrintWriter timeTableOutputWriter = new PrintWriter(new FileOutputStream(timeTableOutputFile));
 
         for (File file : listOfDataFiles) {
             if (file.isFile()) {
                 String filePath = file.getPath();
                 String fileNameOnly = file.getName();
-                output("Now reading in data from " + fileNameOnly);
+                output("Reading in data from: " + fileNameOnly);
                 FileInputStream fileInputStreamData = new FileInputStream(filePath);
                 DataInputStream input = new DataInputStream(fileInputStreamData);
 
-//                int fileLength = Integer.parseInt(fileNameLast .replaceAll("\\D+",""));
-
+                // get the length of the file inferred by the name. Yes, this is dependent on the name of the file having the correct length
+                int fileLength = Integer.parseInt(fileNameOnly.replaceAll("\\D+",""));
                 int[] dataInput = new int[fileLength];
 
-//              read in the raw input data
+//              read in the raw input data and store it in an array
                 for (int index = 0; index < fileLength; index++) {
-                    int data = input.readInt();
-                    dataInput[index] = data;
+                    dataInput[index] = input.readInt();
                 }
 
-                Quicksort quickSorter = new Quicksort( "first", "standard");
-                int[] quickSorted = quickSorter.sort(dataInput,0, fileLength-1);
-                String quickSortDelimiter = "===========QuickSort=============";
+                Quicksort firstStandardQuickSorter = new Quicksort("first", "standard");
+                long firstStandardStartTimeQuickSort = System.nanoTime();
+                int[] firstStandardQuickSorted = firstStandardQuickSorter.sort(dataInput,0, fileLength - 1);
+                long firstStandardEndTimeQuickSort = System.nanoTime();
+                long firstStandardTimeElapsedQuickSort = firstStandardEndTimeQuickSort - firstStandardStartTimeQuickSort;
+                String firstStandardQuickSortDelimiter = "===========QuickSort Using First Item Pivot and Smallest Partition Size=============";
+
+                Quicksort firstLargeQuickSorter = new Quicksort("first", "large");
+                long firstLargeStartTimeQuickSort = System.nanoTime();
+                int[] firstLargeQuickSorted = firstLargeQuickSorter.sort(dataInput,0, fileLength - 1);
+                long firstLargeEndTimeQuickSort = System.nanoTime();
+                long firstLargeTimeElapsedQuickSort = firstLargeEndTimeQuickSort - firstLargeStartTimeQuickSort;
+                String firstLargeQuickSortDelimiter = "===========QuickSort Using First Item and 100 Partition Size=============";
+
+                Quicksort firstMediumQuickSorter = new Quicksort("first", "medium");
+                long firstMediumStartTimeQuickSort = System.nanoTime();
+                int[] firstMediumQuickSorted = firstMediumQuickSorter.sort(dataInput,0, fileLength - 1);
+                long firstMediumEndTimeQuickSort = System.nanoTime();
+                long firstMediumTimeElapsedQuickSort = firstMediumEndTimeQuickSort - firstMediumStartTimeQuickSort;
+                String firstMediumQuickSortDelimiter = "===========QuickSort Using First Item and 50 Partition Size=============";
+
+                Quicksort medianStandardQuickSorter = new Quicksort("median", "standard");
+                long medianStandardStartTimeQuickSort = System.nanoTime();
+                int[] medianStandardQuickSorted = medianStandardQuickSorter.sort(dataInput,0, fileLength - 1);
+                long medianStandardEndTimeQuickSort = System.nanoTime();
+                long medianStandardTimeElapsedQuickSort = medianStandardEndTimeQuickSort - medianStandardStartTimeQuickSort;
+                String medianStandardQuickSortDelimiter = "===========QuickSort Using Median Item and Smallest Partition Size=============";
 
                 MinHeapsort heapSorter = new MinHeapsort(fileLength);
+                long startTimeHeapSort = System.nanoTime();
                 int[] heapSorted = heapSorter.sort(dataInput);
+                long endTimeHeapSort = System.nanoTime();
+                long timeElapsedHeapSort = endTimeHeapSort - startTimeHeapSort;
                 String heapSortDelimiter = "===========HeapSort=============";
 
-                System.out.println("writing to output files...");
+                output("Ran the " + fileNameOnly + " through the sorting algos. Now writing to output files...");
 
-                if (fileLength == 50) {
-                    String outputFileName = fileNameOnly.split("\\.")[0];
-                    generateDirectory("outputData");
-                    File outputFile = new File(outputFolderName + outputFileName + "_sorted.txt");
-                    PrintWriter outputWriter = new PrintWriter(new FileOutputStream(outputFile));
-                    writeToTxtOutput(outputWriter, quickSorted, quickSortDelimiter);
-                    writeToTxtOutput(outputWriter, heapSorted, heapSortDelimiter);
-                    outputWriter.close();
-                }
+                // get rid of the .dat part of the file so that we can convert to a .txt file
+                String outputFileName = fileNameOnly.split("\\.")[0];
+                generateDirectory("outputData");
+                File outputFile = new File(outputFolderName + outputFileName + "_sorted.txt");
+                PrintWriter outputWriter = new PrintWriter(new FileOutputStream(outputFile));
+                writeToTxtOutput(outputWriter, firstStandardQuickSorted, firstStandardQuickSortDelimiter, firstStandardTimeElapsedQuickSort);
+                writeToTxtOutput(outputWriter, firstLargeQuickSorted, firstLargeQuickSortDelimiter, firstLargeTimeElapsedQuickSort);
+                writeToTxtOutput(outputWriter, firstMediumQuickSorted, firstMediumQuickSortDelimiter, firstMediumTimeElapsedQuickSort);
+                writeToTxtOutput(outputWriter, medianStandardQuickSorted, medianStandardQuickSortDelimiter, medianStandardTimeElapsedQuickSort);
+                writeToTxtOutput(outputWriter, heapSorted, heapSortDelimiter, timeElapsedHeapSort);
 
+                // write file times
+                timeTableOutputWriter.println("===========TIME ELAPSED PER SORT FOR FILE: " + fileNameOnly + "=============");
+                writeTimeElapsedToFile(
+                        fileNameOnly,
+                        timeTableOutputWriter,
+                        "Quicksort using first element as pivot, and partition size of 1 or 2",
+                        firstStandardTimeElapsedQuickSort
+                );
+                writeTimeElapsedToFile(
+                        fileNameOnly,
+                        timeTableOutputWriter,
+                        "Quicksort using first element as pivot, and partition size of 50",
+                        firstMediumTimeElapsedQuickSort
+                );
+                writeTimeElapsedToFile(
+                        fileNameOnly,
+                        timeTableOutputWriter,
+                        "Quicksort using first element as pivot, and partition size of 100",
+                        firstLargeTimeElapsedQuickSort
+                );
+                writeTimeElapsedToFile(
+                        fileNameOnly,
+                        timeTableOutputWriter,
+                        "Quicksort using median element as pivot, and partition size of 1 or 2",
+                        medianStandardTimeElapsedQuickSort
+                );
+                writeTimeElapsedToFile(
+                        fileNameOnly,
+                        timeTableOutputWriter,
+                        "Heapsort",
+                        timeElapsedHeapSort
+                );
+
+                // close input and output files
+                outputWriter.close();
                 input.close();
             }
         }
-        // if all the output files aren't sorted, throw an error
+        // close the time table file
+        timeTableOutputWriter.close();
+        // if all the output files aren't sorted, throw an error because we made a mistake.
         try {
             checkIfEverythingIsSorted();
         } catch (FileNotSorted e) {
             output(e.getMessage());
         }
+
     }
 
     /**
@@ -108,7 +182,7 @@ public class SortComparison {
     private static void generateReverseOrderedFiles(int size) throws IOException, Quicksort.InvalidPartitionStoppingChoice, Quicksort.InvalidPivot {
         int[] data = generateRandomData(size);
         int[] sorted = sortDesc(data, size);
-        printArray(sorted);
+
         String fileName = "reversed" + String.valueOf(size);
         writeToDataOutput(fileName + ".dat", inputFolderPath, sorted);
     }
@@ -178,12 +252,23 @@ public class SortComparison {
         output.close();
     }
 
-    private static void writeToTxtOutput(PrintWriter output, int[] data, String delimiter) {
+    private static void writeToTxtOutput(PrintWriter output, int[] data, String delimiter, long timeElapsed) {
         output.println(delimiter);
         for (int datum : data) {
             output.println(datum);
         }
+        output.println("TIME ELAPSED IN NANOSECONDS: " + timeElapsed);
         output.println();
+    }
+
+    private static void writeTimeElapsedToFile(
+            String fileName,
+            PrintWriter timeTableOutputWriter,
+            String description,
+            long elapsedTime
+    ) {
+        timeTableOutputWriter.println(description + ", TIME TO SORT IN NANOSECONDS: " + elapsedTime);
+        timeTableOutputWriter.println();
     }
 
     private static boolean contains(int[] arr, int newNumber) {
@@ -197,15 +282,18 @@ public class SortComparison {
     }
 
     private static void checkIfEverythingIsSorted() throws IOException, FileNotSorted {
-        output("Checking output files...");
+        output("Checking output files are all sorted...");
         File dir = new File(outputFolderName);
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
             for (File dataFile : directoryListing) {
                 String filePath = dataFile.getPath();
                 String fileName = filePath.split("/")[1];
+                if (fileName.equals("timeTables.txt")) {
+                    continue;
+                }
                 String line;
-//                int fileLength = Integer.parseInt(fileName.replaceAll("\\D+",""));
+                int fileLength = Integer.parseInt(fileName.replaceAll("\\D+",""));
                 int[] data = new int[fileLength];
                 BufferedReader dataReader = new BufferedReader(new FileReader(filePath));
                 int i = 0;
@@ -214,7 +302,6 @@ public class SortComparison {
                         data[i] = Integer.parseInt(line);
                         i++;
                     } catch (NumberFormatException e) {
-                        System.out.println("skpping non int in the sorted file");
                         // clear out the data array when you hit the delimiter for the next sort which is heapSort
                         for (int j = 0; j < fileLength; j++) {
                             data[j] = 0;
@@ -226,7 +313,7 @@ public class SortComparison {
                 if (!isSorted(data) && !isSortedReversed(data)) {
                     throw new FileNotSorted("You made a mistake somewhere you idiot: " + fileName + " is not sorted");
                 }
-                System.out.println("this file was sorted; " + fileName);
+                output("This file was sorted: " + fileName);
                 dataReader.close();
             }
         }
@@ -246,6 +333,19 @@ public class SortComparison {
                 return false;
         }
         return true;
+    }
+
+    private static void fileSort(File[] files) {
+        File temp;
+        for (int i = 0; i < files.length; i++) {
+            for (int j = i + 1; j < files.length; j++) {
+                if (files[i].getName().compareTo(files[j].getName()) > 0) {
+                    temp = files[i];
+                    files[i] = files[j];
+                    files[j] = temp;
+                }
+            }
+        }
     }
 
     public static class FileNotSorted extends Exception {

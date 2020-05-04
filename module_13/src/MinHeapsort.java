@@ -1,3 +1,8 @@
+/**
+ * This heapsort class creates a heapsort by inserting numbers and percolating them up until the heap rules are no longer
+ * violated and returns the data in sorted order by repeating removing the head node and heapifying after the node removal
+ */
+
 public class MinHeapsort {
     private int[] heap;
     private int size;
@@ -12,10 +17,11 @@ public class MinHeapsort {
             insert(datum);
         }
         // create a new array for the sorted values. Have to make a copy of the size because removeMin actually decrements size.
+        // the sortedSize is used to create the new array but also is used as the stopping case for the sort below.
         int sortedSize = size;
         int[] sorted = new int[sortedSize];
 
-        // pluck the min value off from heap
+        // pluck the min value off from heap. use SortedSize as the stopping case.
         for(int i = 0; i < sortedSize; i++) {
             sorted[i] = removeMin();
         }
@@ -52,6 +58,10 @@ public class MinHeapsort {
         return heap[0];
     }
 
+    /**
+     * remove the head node. Used when plucking off the tree for sorting.
+     * @return
+     */
     public int removeMin() {
         if (size == 0) {
             throw new IllegalStateException("Min heap is empty!");
@@ -73,7 +83,10 @@ public class MinHeapsort {
         return min;
     }
 
-    // bubble node down until heap is valid.
+    /**
+     * bubble node down until heap is valid.
+     * @param i the starting index to minHeapify from
+     */
     private void minHeapify(int i) {
         int left = left(i);
         int right = right(i);
@@ -91,7 +104,7 @@ public class MinHeapsort {
             smallest = right;
         }
 
-        // if the smallest key is not the current key then bubble-down it.
+        // if the smallest key is not the current key then bubble-down it and call this again recursively.
         if (smallest != i) {
             swap(i, smallest);
             minHeapify(smallest);
