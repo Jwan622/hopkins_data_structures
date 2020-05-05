@@ -5,7 +5,7 @@
  * - use the element at the first index as the pivot and partitioning until there is a partition of size 100 and then using insertion sort.
  * - use the element at the median index as the pivot and partitioning until there is a partition of size 1 or 2 then using insertion sort.
  */
-public class Quicksort {
+public class Quicksort implements Sorter {
     private String pivotMethod;
     private int[] partitionStoppingSizes;
     private final String[] PIVOT_CHOICES = {"first", "median"};
@@ -53,29 +53,36 @@ public class Quicksort {
      * used in another sort. Then, it determines what pivot to use based on values that were passed to this sort and the constructor.
      * It then calls partition.
      * @param arr the data to sort
-     * @param lowIndex the
-     * @param highIndex
-     * @return
+     * @return the sorted array
      */
-    public int[] sort(int[] arr, int lowIndex, int highIndex) {
+    public int[] sort(int[] arr) {
+        int size = arr.length;
         // check for empty or null array. do nothing in this case
-        int[] dataCopy = new int[highIndex + 1];
+        int[] dataCopy = new int[size];
 
-        for (int i = 0; i <= highIndex; i++) {
+        for (int i = 0; i <= size - 1; i++) {
             dataCopy[i] = arr[i];
         }
 
-        int pivotIndex = determine_pivot(lowIndex, highIndex);
+        int pivotIndex = determine_pivot(0, size - 1);
         // if the pivot is not the first item, then do an initial swap before the partitioning.
-        if (pivotIndex != lowIndex) {
-            swap(dataCopy, pivotIndex, lowIndex);
+        if (pivotIndex != 0) {
+            swap(dataCopy, pivotIndex, 0);
         }
 
-        partition(dataCopy, lowIndex, highIndex);
+        partition(dataCopy, 0, size - 1);
 
         return dataCopy;
     }
 
+    /**
+     * method to partition the array by setting the pivot as the element in the lowest index and swapping elements between
+     * high and low indicies until the indicies collide. Then, right and left partitions are created to the left and right
+     * of the collided indicies and this method is called again recursively.
+     * @param arr the array to sort
+     * @param lowIndex lowest index of the partition
+     * @param highIndex highest index of the partition
+     */
     private void partition(int[] arr, int lowIndex, int highIndex) {
         if (arr == null || arr.length == 0) {
             return;
@@ -122,7 +129,7 @@ public class Quicksort {
             }
         }
 
-        //Do same operation as above recursively to sort two sub arrays. do not do anything if the lowIndex and highIndex would be the same.
+        // Do same operation as above recursively to sort two sub arrays. do not do anything if the lowIndex and highIndex would be the same.
         if (lowIndex < highIndexCopy - 1){
             partition(arr, lowIndex, highIndexCopy - 1);
         }
@@ -131,7 +138,14 @@ public class Quicksort {
         }
     }
 
-    public void replace(int array[], int insertFrom, int insertTo) {
+    /**
+     * used to insert the element at the insertFrom to the indexTo. Used by the partition method to do the replacing of
+     * elements with other elements at the respective down and up pointers.
+     * @param array the array to replace elements in
+     * @param insertFrom the index where an element is moved from
+     * @param insertTo the index where the element at indexFrom is moving into
+     */
+    private void replace(int array[], int insertFrom, int insertTo) {
         array[insertTo] = array[insertFrom];;
     }
 
@@ -144,6 +158,14 @@ public class Quicksort {
         array[insertTo] = temp;
     }
 
+    /**
+     * used to determine the pivot to use. If the median pivot is chosen, it is moved into the first index of the array and
+     * the normal quicksort is run. ex: if the lowest index is 5 and the highest is 10, the median index will be 7 due to
+     * integer division
+     * @param low the lowest index of the partition
+     * @param high the highest index of the partition.
+     * @return the pivot index to use
+     */
     private int determine_pivot(int low, int high) {
         if (this.pivotMethod.equals(PIVOT_CHOICES[0])) {
             return low;
@@ -186,7 +208,7 @@ public class Quicksort {
      * used to check if the partition size is reached to begin insertion sort.
      * @param arr the array of partition stopping sizes for this version of quicksort
      * @param number the size of the partition
-     * @return
+     * @return a boolean whether the array contains the number.
      */
     private static boolean contains(int arr[], int number) {
         boolean test = false;

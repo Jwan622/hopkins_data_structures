@@ -3,7 +3,7 @@
  * violated and returns the data in sorted order by repeating removing the head node and heapifying after the node removal
  */
 
-public class MinHeapsort {
+public class MinHeapsort implements Sorter {
     private int[] heap;
     private int size;
 
@@ -60,7 +60,7 @@ public class MinHeapsort {
 
     /**
      * remove the head node. Used when plucking off the tree for sorting.
-     * @return
+     * @return returns the minimum element in the heap
      */
     public int removeMin() {
         if (size == 0) {
