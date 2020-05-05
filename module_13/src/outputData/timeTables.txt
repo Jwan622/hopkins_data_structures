@@ -1,165 +1,165 @@
 ===========TIME ELAPSED PER SORT FOR FILE: asc1000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 358994
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 371013
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 310942
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 1659730
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 358474
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 360082
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 173747
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 188802
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 823721
+Heapsort, TIME TO SORT IN NANOSECONDS: 637337
 
 ===========TIME ELAPSED PER SORT FOR FILE: asc2000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 1401497
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 1154575
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 1166425
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 1183520
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 1476313
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 1237372
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 745347
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 636619
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 294718
+Heapsort, TIME TO SORT IN NANOSECONDS: 317380
 
 ===========TIME ELAPSED PER SORT FOR FILE: asc50.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 2309
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 3676
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 1970
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 3031
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 2874
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 2936
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 2594
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 4148
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 5455
+Heapsort, TIME TO SORT IN NANOSECONDS: 8513
 
 ===========TIME ELAPSED PER SORT FOR FILE: asc500.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 129207
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 158916
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 138869
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 91383
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 159206
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 158769
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 74985
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 49728
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 155844
+Heapsort, TIME TO SORT IN NANOSECONDS: 91135
 
 ===========TIME ELAPSED PER SORT FOR FILE: asc5000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 7003984
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 9093ewqed342
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 6906541
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 6771352
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 6786907
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 6896210
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 3960004
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 3467814
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 610425
+Heapsort, TIME TO SORT IN NANOSECONDS: 602618
 
 ===========TIME ELAPSED PER SORT FOR FILE: rand1000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 81008
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 11570689
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 64873
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 96715
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 73549
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 243641
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 81345
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 102626
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 263376
+Heapsort, TIME TO SORT IN NANOSECONDS: 283602
 
 ===========TIME ELAPSED PER SORT FOR FILE: rand2000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 333191
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 356985
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 309905
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 181082
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 251950
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 234378
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 196811
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 180731
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 274209
+Heapsort, TIME TO SORT IN NANOSECONDS: 452534
 
 ===========TIME ELAPSED PER SORT FOR FILE: rand50.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 7943
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 2214
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 2338
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 2048
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 4233
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 2394
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 1716
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 1937
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 9272
+Heapsort, TIME TO SORT IN NANOSECONDS: 6407
 
 ===========TIME ELAPSED PER SORT FOR FILE: rand500.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 74630
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 31156
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 22828
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 20588
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 36496
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 28257
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 38012
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 31923
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 44807
+Heapsort, TIME TO SORT IN NANOSECONDS: 47975
 
 ===========TIME ELAPSED PER SORT FOR FILE: rand5000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 514496
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 509401
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 603004
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 560006
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 517711
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 1396832
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 648755
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 673320
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 660054
+Heapsort, TIME TO SORT IN NANOSECONDS: 806773
 
 ===========TIME ELAPSED PER SORT FOR FILE: reversed1000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 1003922
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 610275
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 519291
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 390091
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 570336
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 723754
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 226229
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 236226
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 123478
+Heapsort, TIME TO SORT IN NANOSECONDS: 123688
 
 ===========TIME ELAPSED PER SORT FOR FILE: reversed2000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 2036249
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 1570928
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 1682144
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 1564184
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 1846298
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 1683517
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 807102
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 780558
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 256180
+Heapsort, TIME TO SORT IN NANOSECONDS: 266844
 
 ===========TIME ELAPSED PER SORT FOR FILE: reversed50.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 5588
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 5470
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 7019
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 3176
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 2965
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 2701
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 2193
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 2293
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 2865
+Heapsort, TIME TO SORT IN NANOSECONDS: 3795
 
 ===========TIME ELAPSED PER SORT FOR FILE: reversed500.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 114165
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 103247
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 137836
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 100420
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 110342
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 99090
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 60283
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 55044
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 55555
+Heapsort, TIME TO SORT IN NANOSECONDS: 56189
 
 ===========TIME ELAPSED PER SORT FOR FILE: reversed5000.dat=============
-Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 11425034
+Quicksort using first element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 9750888
 
-Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 10188174
+Quicksort using first element as pivot, and partition size of 50, TIME TO SORT IN NANOSECONDS: 9246987
 
-Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 10553470
+Quicksort using first element as pivot, and partition size of 100, TIME TO SORT IN NANOSECONDS: 9211118
 
-Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 4954299
+Quicksort using median element as pivot, and partition size of 1 or 2, TIME TO SORT IN NANOSECONDS: 4490526
 
-Heapsort, TIME TO SORT IN NANOSECONDS: 762715
+Heapsort, TIME TO SORT IN NANOSECONDS: 1250088
 
