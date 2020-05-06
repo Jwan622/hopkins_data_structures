@@ -5,8 +5,8 @@ import java.util.Random;
  * This class is the runner class that calls quicksort and heapsort on the input data
  */
 public class SortComparison {
-    private static String inputFolderPath = "inputData/";
-    private static String outputFolderName = "outputData/";
+    private static String inputFolderName;
+    private static String outputFolderName;
 
     /**
      * main runner method. It reads in the unsorted input files, sorts them through the 4 Quicksort variants
@@ -18,13 +18,20 @@ public class SortComparison {
      * @throws Quicksort.InvalidPartitionStoppingChoice thrown if an invalid stopping choice is provided to Quicksort
      */
     public static void main(String args[]) throws IOException, Quicksort.InvalidPivot, Quicksort.InvalidPartitionStoppingChoice {
+        checkArgs(args);
+        inputFolderName = args[0] + "/";
+        outputFolderName = args[1] + "/";
+
+        // this generates the input and output folders
+        generateDirectory(args[0]);
+        generateDirectory(args[1]);
         // this generates the input files that need to be sorted
-        generateDirectory("inputData");
         generateInputFilesSinceTheLabInputFilesAreWrong();
 
         // this gets the input folder and files of the raw unsorted input files that we just created
-        File folder = new File(inputFolderPath);
+        File folder = new File(inputFolderName);
         File[] listOfDataFiles = folder.listFiles();
+        // this sorts the input files so that the output files and time tables are created in order
         fileSort(listOfDataFiles);
 
         File timeTableOutputFile = new File(outputFolderName + "timeTables.txt");
@@ -48,22 +55,27 @@ public class SortComparison {
                     dataInput[index] = input.readInt();
                 }
 
+                // this is quick sort using the first element as the pivot and runs insertion sort when the partition is size 1 or 2
                 Quicksort firstStandardQuickSorter = new Quicksort("first", "standard");
                 Pair<Integer, int[]> firstStandardQuickSorterPair = runAndGetAverageTime(firstStandardQuickSorter, dataInput);
                 String firstStandardQuickSortDelimiter = "===========QuickSort Using First Item Pivot and Smallest Partition Size=============";
 
+                // this is quick sort using the first element as the pivot and runs insertion sort when the partition is size 100
                 Quicksort firstLargeQuickSorter = new Quicksort("first", "large");
                 Pair<Integer, int[]> firstLargeQuickSorterPair = runAndGetAverageTime(firstLargeQuickSorter, dataInput);
                 String firstLargeQuickSortDelimiter = "===========QuickSort Using First Item and 100 Partition Size=============";
 
+                // this is quick sort using the first element as the pivot and runs insertion sort when the partition is size 50
                 Quicksort firstMediumQuickSorter = new Quicksort("first", "medium");
                 Pair<Integer, int[]> firstMediumQuickSorterPair = runAndGetAverageTime(firstMediumQuickSorter, dataInput);
                 String firstMediumQuickSortDelimiter = "===========QuickSort Using First Item and 50 Partition Size=============";
 
+                // this is quick sort using the median element as the pivot and runs insertion sort when the partition is size 1 or 2
                 Quicksort medianStandardQuickSorter = new Quicksort("median", "standard");
                 Pair<Integer, int[]> medianStandardQuickSorterPair = runAndGetAverageTime(medianStandardQuickSorter, dataInput);
                 String medianStandardQuickSortDelimiter = "===========QuickSort Using Median Item and Smallest Partition Size=============";
 
+                // this is heap sort
                 MinHeapsort heapSorter = new MinHeapsort(fileLength);
                 Pair<Integer, int[]> heapSorterPair = runAndGetAverageTime(heapSorter, dataInput);
                 String heapSortDelimiter = "===========HeapSort=============";
@@ -72,16 +84,16 @@ public class SortComparison {
 
                 // get rid of the .dat part of the file so that we can convert to a .txt file
                 String outputFileName = fileNameOnly.split("\\.")[0];
-                generateDirectory("outputData");
                 File outputFile = new File(outputFolderName + outputFileName + "_sorted.txt");
                 PrintWriter outputWriter = new PrintWriter(new FileOutputStream(outputFile));
+                // write the sorted data and runtimes to the output folder
                 writeToTxtOutput(outputWriter, firstStandardQuickSorterPair.second, firstStandardQuickSortDelimiter, firstStandardQuickSorterPair.first);
                 writeToTxtOutput(outputWriter, firstMediumQuickSorterPair.second, firstMediumQuickSortDelimiter, firstMediumQuickSorterPair.first);
                 writeToTxtOutput(outputWriter, firstLargeQuickSorterPair.second, firstLargeQuickSortDelimiter, firstLargeQuickSorterPair.first);
                 writeToTxtOutput(outputWriter, medianStandardQuickSorterPair.second, medianStandardQuickSortDelimiter, medianStandardQuickSorterPair.first);
                 writeToTxtOutput(outputWriter, heapSorterPair.second, heapSortDelimiter, heapSorterPair.first);
 
-                // write file times
+                // write file times to the timeTables.txt file
                 timeTableOutputWriter.println("===========TIME ELAPSED PER SORT FOR FILE: " + fileNameOnly + "=============");
                 writeTimeElapsedToFile(
                         timeTableOutputWriter,
@@ -163,7 +175,7 @@ public class SortComparison {
         int[] sorted = sortAsc(generateRandomData(size));
 
         String fileName = "asc" + String.valueOf(size);
-        writeToDataOutput(fileName + ".dat", inputFolderPath, sorted);
+        writeToDataOutput(fileName + ".dat", inputFolderName, sorted);
     }
 
     /**
@@ -174,7 +186,7 @@ public class SortComparison {
         int[] sorted = sortDesc(generateRandomData(size));
 
         String fileName = "reversed" + String.valueOf(size);
-        writeToDataOutput(fileName + ".dat", inputFolderPath, sorted);
+        writeToDataOutput(fileName + ".dat", inputFolderName, sorted);
     }
 
     /**
@@ -214,7 +226,7 @@ public class SortComparison {
         int[] data = generateRandomData(size);
 
         String fileName = "rand" + String.valueOf(size);
-        writeToDataOutput(fileName + ".dat", inputFolderPath, data);
+        writeToDataOutput(fileName + ".dat", inputFolderName, data);
     }
 
     /**
@@ -396,6 +408,13 @@ public class SortComparison {
                     files[j] = temp;
                 }
             }
+        }
+    }
+
+    private static void checkArgs(String[] args) {
+        if(args.length != 2) {
+            System.out.println("Proper Usage is: java SortComparison inputData outputData");
+            System.exit(0);
         }
     }
 

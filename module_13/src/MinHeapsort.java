@@ -12,6 +12,11 @@ public class MinHeapsort implements Sorter {
         this.size = 0;
     }
 
+    /**
+     * this is a function that recursively builds a heap and heapifies a heap upon node removal
+     * @param data the unsorted data
+     * @return sorted data using a heap
+     */
     public int[] sort(int[] data) {
         for (int datum: data) {
             insert(datum);
